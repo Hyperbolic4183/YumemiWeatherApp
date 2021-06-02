@@ -40,6 +40,8 @@ class WeatherViewController: UIViewController {
                 message = "不適切な値が設定されました"
             case .unknownError:
                 message = "予期せぬエラーが発生しました"
+            case .APIKeyError:
+                message = "APIの取得に失敗しました"
             }
             let errorAlert = UIAlertController(title: "エラー", message: message, preferredStyle: .alert)
             let errorAction = UIAlertAction(title: "OK", style: .default)

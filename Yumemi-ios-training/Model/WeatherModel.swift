@@ -15,10 +15,10 @@ struct WeatherModel {
             let weatherDataString = try YumemiWeather.fetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }")
             let weatherData = weatherDataString.data(using: String.Encoding.utf8)!
             let weatherDictionary = jsonMappedDictionary(weatherData: weatherData)
-            
-            let weather = Weather(rawValue: weatherDictionary["weather"] as! String)!
-            let lowestTemperature = weatherDictionary["min_temp"] as! Int
-            let highestTemperature = weatherDictionary["max_temp"] as! Int
+            guard let weatherString = weatherDictionary["weather"] as? String else { return .failure(.APIKeyError) }
+            guard let weather = Weather(rawValue: weatherString) else { fatalError("rawValueからの値の生成に失敗しました") }
+            guard let lowestTemperature = weatherDictionary["min_temp"] as? Int else { return .failure(.APIKeyError) }
+            guard let highestTemperature = weatherDictionary["max_temp"] as? Int else { return .failure(.APIKeyError) }
             return .success(WeatherViewState(weather: weather, lowestTemperature: lowestTemperature, highestTemperature: highestTemperature))
         } catch let error as YumemiWeatherError {
             switch error {

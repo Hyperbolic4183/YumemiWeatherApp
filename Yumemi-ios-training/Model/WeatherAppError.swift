@@ -7,5 +7,6 @@
 
 enum WeatherAppError: Error {
     case invalidParameterError
+    case APIKeyError
     case unknownError
 }

@@ -8,8 +8,6 @@
 import YumemiWeather
 import Foundation
 
-
-
 struct WeatherModel {
     
     func reloading() -> Result<WeatherViewState, WeatherAppError> {
@@ -17,9 +15,10 @@ struct WeatherModel {
             let weatherDataString = try YumemiWeather.fetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }")
             let weatherData = weatherDataString.data(using: String.Encoding.utf8)!
             let weatherDictionary = jsonMappedDictionary(weatherData: weatherData)
-            let weather = Weather(rawValue: weatherDictionary!["weather"] as! String)!
-            let lowestTemperature = weatherDictionary!["min_temp"] as! Int
-            let highestTemperature = weatherDictionary!["max_temp"] as! Int
+            
+            let weather = Weather(rawValue: weatherDictionary["weather"] as! String)!
+            let lowestTemperature = weatherDictionary["min_temp"] as! Int
+            let highestTemperature = weatherDictionary["max_temp"] as! Int
             return .success(WeatherViewState(weather: weather, lowestTemperature: lowestTemperature, highestTemperature: highestTemperature))
         } catch let error as YumemiWeatherError {
             switch error {
@@ -33,12 +32,12 @@ struct WeatherModel {
         }
     }
     
-    func jsonMappedDictionary(weatherData: Data) -> [String: Any]? {
+    func jsonMappedDictionary(weatherData: Data) -> [String: Any] {
         do {
-            let weatherDictionary = try JSONSerialization.jsonObject(with: weatherData) as? Dictionary<String, Any>
-            return weatherDictionary
+            let weatherDictionary = try JSONSerialization.jsonObject(with: weatherData) as? [String: Any]
+            return weatherDictionary!
         } catch {
-            return nil
+            fatalError("JSONSerializationに失敗しました")
         }
     }
 }

@@ -31,7 +31,6 @@ struct WeatherModel {
     func jsonMappedDictionary(weatherData: Data) -> [String: Any] {
         do {
             let weatherDictionary = try JSONSerialization.jsonObject(with: weatherData) as? [String: Any]
-            print(weatherDictionary!)
             return weatherDictionary!
         } catch {
             fatalError("JSONSerializationに失敗しました")

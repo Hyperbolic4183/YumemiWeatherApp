@@ -10,16 +10,12 @@ import Foundation
 
 struct WeatherModel {
     
-    func reloading() -> Result<WeatherViewState, WeatherAppError> {
+    func reloading() -> Result<[String: Any], WeatherAppError> {
         do {
             let weatherDataString = try YumemiWeather.fetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }")
             let weatherData = weatherDataString.data(using: String.Encoding.utf8)!
             let weatherDictionary = jsonMappedDictionary(weatherData: weatherData)
-            guard let weatherString = weatherDictionary["weather"] as? String,
-                  let lowestTemperature = weatherDictionary["min_temp"] as? Int,
-                  let highestTemperature = weatherDictionary["max_temp"] as? Int else { return .failure(.APIKeyError) }
-            guard let weather = Weather(rawValue: weatherString) else { fatalError("rawValueからの値の生成に失敗しました") }
-            return .success(WeatherViewState(weather: weather, lowestTemperature: lowestTemperature, highestTemperature: highestTemperature))
+            return .success(weatherDictionary)
         } catch let error as YumemiWeatherError {
             switch error {
             case .invalidParameterError:
@@ -35,6 +31,7 @@ struct WeatherModel {
     func jsonMappedDictionary(weatherData: Data) -> [String: Any] {
         do {
             let weatherDictionary = try JSONSerialization.jsonObject(with: weatherData) as? [String: Any]
+            print(weatherDictionary!)
             return weatherDictionary!
         } catch {
             fatalError("JSONSerializationに失敗しました")

@@ -31,8 +31,13 @@ class WeatherViewController: UIViewController {
     @objc func reload(_ sender: UIButton) {
         let result = weatherModel.reloading()
         switch result {
-        case .success(let state):
-            weatherView.changeDisplay(weatherViewState: state)
+        case .success(let dictionary):
+            guard let weatherString = dictionary["weather"] as? String,
+                  let lowestTemperature = dictionary["min_temp"] as? Int,
+                  let highestTemperature = dictionary["max_temp"] as? Int else { fatalError("APIの取得に失敗しました") }
+            guard let weather = Weather(rawValue: weatherString) else { fatalError("rawValueからの値の生成に失敗しました") }
+            let weatherViewState = WeatherViewState(weather: weather, lowestTemperature: lowestTemperature, highestTemperature: highestTemperature)
+            weatherView.changeDisplay(weatherViewState: weatherViewState)
         case .failure(let error):
             var message = ""
             switch error {
@@ -40,8 +45,6 @@ class WeatherViewController: UIViewController {
                 message = "不適切な値が設定されました"
             case .unknownError:
                 message = "予期せぬエラーが発生しました"
-            case .APIKeyError:
-                message = "APIの取得に失敗しました"
             }
             let errorAlert = UIAlertController(title: "エラー", message: message, preferredStyle: .alert)
             let errorAction = UIAlertAction(title: "OK", style: .default)

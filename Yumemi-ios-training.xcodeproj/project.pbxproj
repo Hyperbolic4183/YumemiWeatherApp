@@ -82,7 +82,6 @@
 			isa = PBXGroup;
 			children = (
 				D93DD7D4264B78A90068CA73 /* WeatherModel.swift */,
-				D9B65FE1264E3208002E3578 /* WeatherViewState.swift */,
 				D9D4D31B2656825300372FD2 /* Weather.swift */,
 				D9B059A42660CB7700566FCA /* WeatherAppError.swift */,
 			);
@@ -101,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				D9982538263B730F00E373B8 /* WeatherViewController.swift */,
+				D9B65FE1264E3208002E3578 /* WeatherViewState.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

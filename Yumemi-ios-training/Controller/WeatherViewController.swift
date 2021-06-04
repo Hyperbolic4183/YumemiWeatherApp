@@ -10,8 +10,8 @@ import UIKit
 class WeatherViewController: UIViewController {
     
     let weatherView = WeatherView()
-    var weatherModel: YumemiWeatherGateWay
-    init(model: YumemiWeatherGateWay) {
+    var weatherModel: Fetcher
+    init(model: Fetcher) {
         self.weatherModel = model
         super.init(nibName: nil, bundle: nil)
     }
@@ -31,11 +31,10 @@ class WeatherViewController: UIViewController {
     @objc func reload(_ sender: UIButton) {
         let result = weatherModel.fetchYumemiWeather()
         switch result {
-        case .success(let dictionary):
-            guard let weatherString = dictionary["weather"] as? String,
-                  let lowestTemperature = dictionary["min_temp"] as? Int,
-                  let highestTemperature = dictionary["max_temp"] as? Int else { fatalError("APIの取得に失敗しました") }
-            guard let weather = Weather(rawValue: weatherString) else { fatalError("rawValueからの値の生成に失敗しました") }
+        case .success(let information):
+            let weather = information.weather
+            guard let lowestTemperature = information.weatherDictionary!["min_temp"] as? Int,
+                  let highestTemperature = information.weatherDictionary!["max_temp"] as? Int else { return assertionFailure("optionalがnil") }
             let weatherViewState = WeatherViewState(weather: weather, lowestTemperature: String(lowestTemperature), highestTemperature: String(highestTemperature))
             weatherView.changeDisplay(weatherViewState: weatherViewState)
         case .failure(let error):

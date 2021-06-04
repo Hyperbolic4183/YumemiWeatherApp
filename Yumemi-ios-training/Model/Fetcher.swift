@@ -8,14 +8,16 @@
 import YumemiWeather
 import Foundation
 
-struct YumemiWeatherGateWay {
+struct Fetcher {
     
-    func fetchYumemiWeather() -> Result<[String: Any], WeatherAppError> {
+    func fetchYumemiWeather() -> Result<WeatherInformation, WeatherAppError> {
         do {
             let weatherDataString = try YumemiWeather.fetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }")
             let weatherData = Data(weatherDataString.utf8)
-            let weatherDictionary = convert(from: weatherData)
-            return .success(weatherDictionary!)
+            let weatherDictionary = convert(from: weatherData)!
+            let weatherString = weatherDictionary["weather"] as! String
+            let weatherInformation = WeatherInformation(weather: WeatherInformation.Weather(rawValue: weatherString)!, weatherDictionary: weatherDictionary)
+            return .success(weatherInformation)
         } catch let error as YumemiWeatherError {
             switch error {
             case .invalidParameterError:

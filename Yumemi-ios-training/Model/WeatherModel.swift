@@ -14,8 +14,8 @@ struct WeatherModel {
         do {
             let weatherDataString = try YumemiWeather.fetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }")
             let weatherData = weatherDataString.data(using: String.Encoding.utf8)!
-            let weatherDictionary = jsonMappedDictionary(weatherData: weatherData)
-            return .success(weatherDictionary)
+            let weatherDictionary = convert(from: weatherData)
+            return .success(weatherDictionary!)
         } catch let error as YumemiWeatherError {
             switch error {
             case .invalidParameterError:
@@ -28,12 +28,13 @@ struct WeatherModel {
         }
     }
     
-    func jsonMappedDictionary(weatherData: Data) -> [String: Any] {
+    func convert(from weatherData: Data) -> [String: Any]? {
         do {
             let weatherDictionary = try JSONSerialization.jsonObject(with: weatherData) as? [String: Any]
-            return weatherDictionary!
+            return weatherDictionary
         } catch {
-            fatalError("JSONSerializationに失敗しました")
+            assertionFailure("weatherDictionaryがnil")
+            return nil
         }
     }
 }

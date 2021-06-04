@@ -30,8 +30,7 @@ struct WeatherModel {
     
     func convert(from weatherData: Data) -> [String: Any]? {
         do {
-            let weatherDictionary = try JSONSerialization.jsonObject(with: weatherData) as? [String: Any]
-            return weatherDictionary
+            return try JSONSerialization.jsonObject(with: weatherData) as? [String: Any]
         } catch {
             assertionFailure("JSONSerializationには失敗しないはず")
             return nil

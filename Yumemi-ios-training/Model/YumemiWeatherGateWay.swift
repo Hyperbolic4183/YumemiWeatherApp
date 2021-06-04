@@ -10,7 +10,7 @@ import Foundation
 
 struct YumemiWeatherGateWay {
     
-    func fetchWeather() -> Result<[String: Any], WeatherAppError> {
+    func fetchYumemiWeather() -> Result<[String: Any], WeatherAppError> {
         do {
             let weatherDataString = try YumemiWeather.fetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }")
             let weatherData = Data(weatherDataString.utf8)

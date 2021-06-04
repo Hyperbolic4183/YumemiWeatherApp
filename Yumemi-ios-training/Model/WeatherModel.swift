@@ -13,7 +13,7 @@ struct WeatherModel {
     func reloading() -> Result<[String: Any], WeatherAppError> {
         do {
             let weatherDataString = try YumemiWeather.fetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }")
-            let weatherData = weatherDataString.data(using: String.Encoding.utf8)!
+            let weatherData = Data(weatherDataString.utf8)
             let weatherDictionary = convert(from: weatherData)
             return .success(weatherDictionary!)
         } catch let error as YumemiWeatherError {

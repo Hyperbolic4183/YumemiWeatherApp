@@ -36,7 +36,7 @@ class WeatherViewController: UIViewController {
                   let lowestTemperature = dictionary["min_temp"] as? Int,
                   let highestTemperature = dictionary["max_temp"] as? Int else { fatalError("APIの取得に失敗しました") }
             guard let weather = Weather(rawValue: weatherString) else { fatalError("rawValueからの値の生成に失敗しました") }
-            let weatherViewState = WeatherViewState(weather: weather, lowestTemperature: lowestTemperature, highestTemperature: highestTemperature)
+            let weatherViewState = WeatherViewState(weather: weather, lowestTemperature: String(lowestTemperature), highestTemperature: String(highestTemperature))
             weatherView.changeDisplay(weatherViewState: weatherViewState)
         case .failure(let error):
             var message = ""

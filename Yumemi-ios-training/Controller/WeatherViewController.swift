@@ -10,8 +10,8 @@ import UIKit
 class WeatherViewController: UIViewController {
     
     let weatherView = WeatherView()
-    var weatherModel: WeatherModel
-    init(model: WeatherModel) {
+    var weatherModel: YumemiWeatherGateWay
+    init(model: YumemiWeatherGateWay) {
         self.weatherModel = model
         super.init(nibName: nil, bundle: nil)
     }
@@ -29,7 +29,7 @@ class WeatherViewController: UIViewController {
         weatherView.reloadButton.addTarget(self, action: #selector(reload(_:)), for: .touchUpInside)
     }
     @objc func reload(_ sender: UIButton) {
-        let result = weatherModel.reloading()
+        let result = weatherModel.fetchWeather()
         switch result {
         case .success(let dictionary):
             guard let weatherString = dictionary["weather"] as? String,

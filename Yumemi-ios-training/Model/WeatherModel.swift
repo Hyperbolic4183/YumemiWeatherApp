@@ -33,7 +33,7 @@ struct WeatherModel {
             let weatherDictionary = try JSONSerialization.jsonObject(with: weatherData) as? [String: Any]
             return weatherDictionary
         } catch {
-            assertionFailure("weatherDictionaryがnil")
+            assertionFailure("JSONSerializationには失敗しないはず")
             return nil
         }
     }

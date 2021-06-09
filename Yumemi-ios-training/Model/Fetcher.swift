@@ -14,9 +14,10 @@ struct Fetcher {
         do {
             let weatherDataString = try YumemiWeather.fetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }")
             let weatherData = Data(weatherDataString.utf8)
-            guard let weatherDictionary = convert(from: weatherData) else { return .failure(.unknownError) }
-            let weatherString = weatherDictionary["weather"] as! String
-            let weatherInformation = WeatherInformation(weather: WeatherInformation.Weather(rawValue: weatherString)!, weatherDictionary: weatherDictionary)
+            guard let weatherDictionary = convert(from: weatherData),
+                  let weatherString = weatherDictionary["weather"] as? String,
+                  let weather = WeatherInformation.Weather(rawValue: weatherString) else {  return .failure(.unknownError) }
+            let weatherInformation = WeatherInformation(weather: weather, weatherDictionary: weatherDictionary)
             return .success(weatherInformation)
         } catch let error as YumemiWeatherError {
             switch error {

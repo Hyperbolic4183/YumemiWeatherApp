@@ -12,7 +12,7 @@ struct WeatherViewState {
     let lowestTemperature: String
     let highestTemperature: String
     
-    init(weather: WeatherInformation.Weather, lowestTemperature: String, highestTemperature: String) {
+    init(_ weather: WeatherInformation.Weather, _ lowestTemperature: String, _ highestTemperature: String) {
         self.weather = UIImage(named: weather.rawValue)!
         self.lowestTemperature = lowestTemperature
         self.highestTemperature = highestTemperature

@@ -35,8 +35,8 @@ class WeatherViewController: UIViewController {
             let weather = information.weather
             guard let lowestTemperature = information.weatherDictionary!["min_temp"] as? Int,
                   let highestTemperature = information.weatherDictionary!["max_temp"] as? Int else { return assertionFailure("optionalがnil") }
-            let weatherViewState = WeatherViewState(weather: weather, lowestTemperature: String(lowestTemperature), highestTemperature: String(highestTemperature))
-            weatherView.changeDisplay(weatherViewState: weatherViewState)
+            let weatherViewState = WeatherViewState(weather, String(lowestTemperature), String(highestTemperature))
+            weatherView.changeDisplay(weatherViewState)
         case .failure(let error):
             var message = ""
             switch error {

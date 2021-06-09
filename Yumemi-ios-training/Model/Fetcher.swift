@@ -14,7 +14,7 @@ struct Fetcher {
         do {
             let weatherDataString = try YumemiWeather.fetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }")
             let weatherData = Data(weatherDataString.utf8)
-            let weatherDictionary = convert(from: weatherData)!
+            guard let weatherDictionary = convert(from: weatherData) else { return .failure(.unknownError) }
             let weatherString = weatherDictionary["weather"] as! String
             let weatherInformation = WeatherInformation(weather: WeatherInformation.Weather(rawValue: weatherString)!, weatherDictionary: weatherDictionary)
             return .success(weatherInformation)

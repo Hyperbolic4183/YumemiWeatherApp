@@ -34,7 +34,6 @@ struct Fetcher {
         do {
             return try JSONSerialization.jsonObject(with: weatherData) as? [String: Any]
         } catch {
-            assertionFailure("JSONSerializationには失敗しないはず")
             return nil
         }
     }

@@ -5,7 +5,7 @@
 //  Created by 大塚 周 on 2021/06/11.
 //
 import Foundation
-struct WeatherResponse {
+struct WeatherResponse: Codable {
     let weather: String
     let minTemp: Int
     let maxTemp: Int

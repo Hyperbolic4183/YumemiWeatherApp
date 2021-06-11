@@ -7,10 +7,8 @@
 
 import UIKit
 
+let notificationName = "enterForeground"
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
-    //テスト
-    //テストSession1
 
     var window: UIWindow?
 
@@ -45,8 +43,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
+        NotificationCenter.default.post(name: .init(notificationName), object: nil)
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {

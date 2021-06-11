@@ -7,13 +7,23 @@
 
 import UIKit
 
+
 class WeatherViewController: UIViewController {
-    
     let weatherView = WeatherView()
     var weatherModel: Fetcher
+    
     init(model: Fetcher) {
         self.weatherModel = model
         super.init(nibName: nil, bundle: nil)
+        NotificationCenter.default.addObserver(forName: .init(rawValue: notificationName),
+                                               object: nil,
+                                               queue: nil,
+                                               using: { _ in
+                                                self.reload()
+                                               })
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .init(rawValue: notificationName), object: nil)
     }
     
     @available(*, unavailable, message: "init(coder:) has not been implemented")
@@ -30,6 +40,9 @@ class WeatherViewController: UIViewController {
         weatherView.closeButton.addTarget(self, action: #selector(dismiss(_:)), for: .touchUpInside)
     }
     @objc func reload(_ sender: UIButton) {
+        reload()
+    }
+    func reload() {
         let result = weatherModel.fetchYumemiWeather()
         switch result {
         case .success(let information):

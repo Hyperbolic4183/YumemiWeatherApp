@@ -16,8 +16,8 @@ struct Fetcher {
             let weatherData = Data(weatherDataString.utf8)
             guard let weatherResponse = convert(from: weatherData),
                   let weather = WeatherInformation.Weather(rawValue: weatherResponse.weather) else { return .failure(.unknownError) }
-            let minTemperature = String(weatherResponse.minTemp)
-            let maxTemperature = String(weatherResponse.maxTemp)
+            let minTemperature = String(weatherResponse.min_temp)
+            let maxTemperature = String(weatherResponse.max_temp)
             let weatherInformation = WeatherInformation(weather: weather, minTemperature: minTemperature, maxTemperature: maxTemperature)
             return .success(weatherInformation)
             
@@ -36,29 +36,14 @@ struct Fetcher {
     }
     
     func convert(from weatherData: Data) -> WeatherResponse? {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
         do {
-            let weatherDictionary = try JSONSerialization.jsonObject(with: weatherData) as? [String: Any]
-            guard let weather = weatherDictionary?["weather"] as? String,
-                  let minTemp = weatherDictionary?["min_temp"] as? Int,
-                  let maxTemp = weatherDictionary?["max_temp"] as? Int,
-                  let dateString = weatherDictionary?["date"] as? String else {
-                assertionFailure("JSONから辞書型への変換に失敗した")
-                return nil
-            }
-            guard let date = dateFormat(from: dateString) else {
-                assertionFailure("String->Dateの変換に失敗した")
-                return nil
-            }
-            let weatherResponse = WeatherResponse(weather: weather, minTemp: minTemp, maxTemp: maxTemp, date: date)
+            let weatherResponse = try decoder.decode(WeatherResponse.self, from: weatherData)
             return weatherResponse
-            
         } catch {
+            assertionFailure("decodeに失敗した")
             return nil
         }
-    }
-    func dateFormat(from date: String) -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX"
-        return dateFormatter.date(from: date)
     }
 }

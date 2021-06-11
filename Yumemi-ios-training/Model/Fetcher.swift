@@ -20,6 +20,7 @@ struct Fetcher {
             let maxTemperature = String(weatherResponse.maxTemp)
             let weatherInformation = WeatherInformation(weather, minTemperature, maxTemperature)
             return .success(weatherInformation)
+            
         } catch let error as YumemiWeatherError {
             switch error {
             case .invalidParameterError:
@@ -27,8 +28,10 @@ struct Fetcher {
             case .unknownError:
                 return .failure(.unknownError)
             }
+            
         } catch {
-            fatalError("想定外のエラーが発生しました")
+            assertionFailure("想定外のエラーが発生しました")
+            return .failure(.unknownError)
         }
     }
     
@@ -48,6 +51,7 @@ struct Fetcher {
             }
             let weatherResponse = WeatherResponse(weather: weather, minTemp: minTemp, maxTemp: maxTemp, date: date)
             return weatherResponse
+            
         } catch {
             return nil
         }

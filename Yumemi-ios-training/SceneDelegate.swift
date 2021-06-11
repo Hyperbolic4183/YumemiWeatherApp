@@ -7,7 +7,6 @@
 
 import UIKit
 
-let notificationName = "enterForeground"
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -43,7 +42,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
-        NotificationCenter.default.post(name: .init(notificationName), object: nil)
+        
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {

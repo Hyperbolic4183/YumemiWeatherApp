@@ -18,7 +18,7 @@ struct Fetcher {
                   let weather = WeatherInformation.Weather(rawValue: weatherResponse.weather) else { return .failure(.unknownError) }
             let minTemperature = String(weatherResponse.minTemp)
             let maxTemperature = String(weatherResponse.maxTemp)
-            let weatherInformation = WeatherInformation(weather: weather, minTemperature: minTemperature, maxTemperature: maxTemperature)
+            let weatherInformation = WeatherInformation(weather, minTemperature, maxTemperature)
             return .success(weatherInformation)
         } catch let error as YumemiWeatherError {
             switch error {

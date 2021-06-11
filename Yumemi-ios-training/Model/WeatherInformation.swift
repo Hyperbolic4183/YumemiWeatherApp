@@ -6,11 +6,6 @@
 //
 
 struct WeatherInformation {
-    init(_ weather: Weather, _ minTemperature: String, _ maxTemperature: String) {
-        self.weather = weather
-        self.minTemperature = minTemperature
-        self.maxTemperature = maxTemperature
-    }
     enum Weather: String {
         case sunny
         case cloudy

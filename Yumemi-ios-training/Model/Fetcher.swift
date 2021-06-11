@@ -16,8 +16,8 @@ struct Fetcher {
             let weatherData = Data(weatherDataString.utf8)
             guard let weatherResponse = convert(from: weatherData),
                   let weather = WeatherInformation.Weather(rawValue: weatherResponse.weather) else { return .failure(.unknownError) }
-            let minTemperature = String(weatherResponse.min_temp)
-            let maxTemperature = String(weatherResponse.max_temp)
+            let minTemperature = String(weatherResponse.minTemp)
+            let maxTemperature = String(weatherResponse.maxTemp)
             let weatherInformation = WeatherInformation(weather: weather, minTemperature: minTemperature, maxTemperature: maxTemperature)
             return .success(weatherInformation)
             
@@ -38,6 +38,7 @@ struct Fetcher {
     func convert(from weatherData: Data) -> WeatherResponse? {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         do {
             let weatherResponse = try decoder.decode(WeatherResponse.self, from: weatherData)
             return weatherResponse

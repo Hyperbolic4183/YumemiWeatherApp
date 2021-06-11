@@ -7,7 +7,7 @@
 import Foundation
 struct WeatherResponse: Codable {
     let weather: String
-    let min_temp: Int
-    let max_temp: Int
+    let minTemp: Int
+    let maxTemp: Int
     let date: Date
 }

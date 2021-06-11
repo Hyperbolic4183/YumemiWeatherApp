@@ -1,5 +1,5 @@
 //
-//  Weather.swift
+//  WeatherInformation.swift
 //  Yumemi-ios-training
 //
 //  Created by 大塚 周 on 2021/05/20.
@@ -12,5 +12,6 @@ struct WeatherInformation {
         case rainy
     }
     var weather: Weather
-    var weatherDictionary: [String: Any]?
+    var minTemperature: String
+    var maxTemperature: String
 }

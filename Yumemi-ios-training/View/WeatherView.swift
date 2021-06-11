@@ -110,7 +110,7 @@ class WeatherView: UIView {
     func changeDisplay(_ weatherViewState: WeatherViewState) {
         weatherImageView.image = weatherViewState.weather
         weatherImageView.tintColor = weatherViewState.color
-        lowestTemperatureLabel.text = String(weatherViewState.lowestTemperature)
-        highestTemperatureLabel.text = String(weatherViewState.highestTemperature)
+        lowestTemperatureLabel.text = String(weatherViewState.minTemperature)
+        highestTemperatureLabel.text = String(weatherViewState.maxTemperature)
     }
 }

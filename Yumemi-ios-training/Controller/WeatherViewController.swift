@@ -27,6 +27,7 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         weatherView.reloadButton.addTarget(self, action: #selector(reload(_:)), for: .touchUpInside)
+        weatherView.closeButton.addTarget(self, action: #selector(dismiss(_:)), for: .touchUpInside)
     }
     @objc func reload(_ sender: UIButton) {
         let result = weatherModel.fetchYumemiWeather()
@@ -47,6 +48,9 @@ class WeatherViewController: UIViewController {
             }
             presentAlertController(message)
         }
+    }
+    @objc func dismiss(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
     }
     func presentAlertController(_ message: String) {
         let errorAlert = UIAlertController(title: "エラー", message: message, preferredStyle: .alert)

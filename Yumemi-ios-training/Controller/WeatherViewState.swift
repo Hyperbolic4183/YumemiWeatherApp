@@ -7,11 +7,15 @@
 import UIKit
 
 struct WeatherViewState {
-    let weather: Weather
+    let weather: UIImage
     let color: UIColor
+    let minTemperature: String
+    let maxTemperature: String
     
-    init(weather: Weather) {
-        self.weather = weather
+    init(_ weather: WeatherInformation.Weather, _ lowestTemperature: String, _ highestTemperature: String) {
+        self.weather = UIImage(named: weather.rawValue)!
+        self.minTemperature = lowestTemperature
+        self.maxTemperature = highestTemperature
         switch weather {
         case .sunny:
             self.color = .red
@@ -22,3 +26,4 @@ struct WeatherViewState {
         }
     }
 }
+

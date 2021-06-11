@@ -107,8 +107,10 @@ class WeatherView: UIView {
         reloadButton.setTitle("Reload", for: .normal)
     }
     
-    func changeDisplay(weatherViewState: WeatherViewState) {
-        weatherImageView.image = UIImage(named: weatherViewState.weather.rawValue)
+    func changeDisplay(_ weatherViewState: WeatherViewState) {
+        weatherImageView.image = weatherViewState.weather
         weatherImageView.tintColor = weatherViewState.color
+        lowestTemperatureLabel.text = String(weatherViewState.minTemperature)
+        highestTemperatureLabel.text = String(weatherViewState.maxTemperature)
     }
 }

@@ -10,8 +10,8 @@ import UIKit
 class WeatherViewController: UIViewController {
     
     let weatherView = WeatherView()
-    var weatherModel: WeatherModel
-    init(model: WeatherModel) {
+    var weatherModel: Fetcher
+    init(model: Fetcher) {
         self.weatherModel = model
         super.init(nibName: nil, bundle: nil)
     }
@@ -29,10 +29,14 @@ class WeatherViewController: UIViewController {
         weatherView.reloadButton.addTarget(self, action: #selector(reload(_:)), for: .touchUpInside)
     }
     @objc func reload(_ sender: UIButton) {
-        let result = weatherModel.reloading()
+        let result = weatherModel.fetchYumemiWeather()
         switch result {
-        case .success(let state):
-            weatherView.changeDisplay(weatherViewState: state)
+        case .success(let information):
+            let weather = information.weather
+            let minTemperature = information.minTemperature
+            let maxTemperature = information.maxTemperature
+            let weatherViewState = WeatherViewState(weather, minTemperature, maxTemperature)
+            weatherView.changeDisplay(weatherViewState)
         case .failure(let error):
             var message = ""
             switch error {
@@ -41,10 +45,14 @@ class WeatherViewController: UIViewController {
             case .unknownError:
                 message = "予期せぬエラーが発生しました"
             }
-            let errorAlert = UIAlertController(title: "エラー", message: message, preferredStyle: .alert)
-            let errorAction = UIAlertAction(title: "OK", style: .default)
-            errorAlert.addAction(errorAction)
-            present(errorAlert, animated: true, completion: nil)
+            presentAlertController(message)
         }
     }
+    func presentAlertController(_ message: String) {
+        let errorAlert = UIAlertController(title: "エラー", message: message, preferredStyle: .alert)
+        let errorAction = UIAlertAction(title: "OK", style: .default)
+        errorAlert.addAction(errorAction)
+        present(errorAlert, animated: true, completion: nil)
+    }
 }
+

@@ -7,15 +7,16 @@
 
 import UIKit
 
+
 class WeatherViewController: UIViewController {
-    
     let weatherView = WeatherView()
     var weatherModel: Fetcher
+    
     init(model: Fetcher) {
         self.weatherModel = model
         super.init(nibName: nil, bundle: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
-    
     @available(*, unavailable, message: "init(coder:) has not been implemented")
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

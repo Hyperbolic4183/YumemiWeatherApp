@@ -58,6 +58,31 @@ class Yumemi_ios_trainingTests: XCTestCase {
         reloadButton.sendActions(for: .touchUpInside)
         XCTAssertEqual(imageView.image!, UIImage(named: "rainy")!)
     }
+    func test_最高気温がUILabelに反映される() {
+        
+        struct MaxTemperature: Testable {
+            
+            let maxTemperature: String
+            
+            init(maxTemperature: String) {
+                self.maxTemperature = maxTemperature
+            }
+            func fetchYumemiWeather() -> Result<WeatherInformation, WeatherAppError> {
+                .success(WeatherInformation(weather: .sunny, minTemperature: "0", maxTemperature: maxTemperature))
+            }
+        }
+        
+        let testingMaxTemperature = "40"
+        let viewController = WeatherViewController(model: MaxTemperature(maxTemperature: testingMaxTemperature))
+        let view = viewController.weatherView
+        let maxTemperature = view.maxTemperatureLabel
+        let reloadButton = view.reloadButton
+        
+        viewController.viewDidLoad()
+        reloadButton.sendActions(for: .touchUpInside)
+        XCTAssertEqual(maxTemperature.text, testingMaxTemperature)
+    }
+    
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }

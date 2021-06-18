@@ -30,12 +30,21 @@ class WeatherViewController: UIViewController {
         weatherView.reloadButton.addTarget(self, action: #selector(reload(_:)), for: .touchUpInside)
         weatherView.closeButton.addTarget(self, action: #selector(dismiss(_:)), for: .touchUpInside)
     }
+    
+    func convertWeatherViewState(from information: WeatherInformation) -> WeatherViewState {
+        WeatherViewState(weather: information.weather, minTemperature: information.minTemperature, maxTemperature: information.maxTemperature)
+    }
+    
+    func changeDisplay(_ weatherViewState: WeatherViewState) {
+        weatherView.changeDisplay(weatherViewState)
+    }
+    
     @objc func reload(_ sender: UIButton) {
         let result = weatherModel.fetchYumemiWeather()
         switch result {
         case .success(let information):
             let weatherViewState = convertWeatherViewState(from: information)
-            weatherView.changeDisplay(weatherViewState)
+            changeDisplay(weatherViewState)
         case .failure(let error):
             var message = ""
             switch error {
@@ -46,9 +55,6 @@ class WeatherViewController: UIViewController {
             }
             presentAlertController(message)
         }
-    }
-    func convertWeatherViewState(from information: WeatherInformation) -> WeatherViewState {
-        WeatherViewState(weather: information.weather, minTemperature: information.minTemperature, maxTemperature: information.maxTemperature)
     }
     @objc func dismiss(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)

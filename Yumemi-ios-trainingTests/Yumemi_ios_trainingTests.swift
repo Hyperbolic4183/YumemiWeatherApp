@@ -26,6 +26,22 @@ class Yumemi_ios_trainingTests: XCTestCase {
         reloadButton.sendActions(for: .touchUpInside)
         XCTAssertEqual(imageView.image!, UIImage(named: "sunny")!)
     }
+    func test_天気予報がcloudyだったときに画面に晴れ画像が表示される() {
+        
+        struct Cloudy: Testable {
+            func fetchYumemiWeather() -> Result<WeatherInformation, WeatherAppError> {
+                .success(WeatherInformation(weather: .cloudy, minTemperature: "0", maxTemperature: "0"))
+            }
+        }
+        let viewController = WeatherViewController(model: Cloudy())
+        let view = viewController.weatherView
+        let imageView = view.weatherImageView
+        let reloadButton = view.reloadButton
+        
+        viewController.viewDidLoad()
+        reloadButton.sendActions(for: .touchUpInside)
+        XCTAssertEqual(imageView.image!, UIImage(named: "cloudy")!)
+    }
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }

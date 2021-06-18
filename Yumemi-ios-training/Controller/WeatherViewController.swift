@@ -34,10 +34,7 @@ class WeatherViewController: UIViewController {
         let result = weatherModel.fetchYumemiWeather()
         switch result {
         case .success(let information):
-            let weather = information.weather
-            let minTemperature = information.minTemperature
-            let maxTemperature = information.maxTemperature
-            let weatherViewState = WeatherViewState(weather, minTemperature, maxTemperature)
+            let weatherViewState = convertWeatherViewState(from: information)
             weatherView.changeDisplay(weatherViewState)
         case .failure(let error):
             var message = ""
@@ -49,6 +46,9 @@ class WeatherViewController: UIViewController {
             }
             presentAlertController(message)
         }
+    }
+    func convertWeatherViewState(from information: WeatherInformation) -> WeatherViewState {
+        WeatherViewState(weather: information.weather, lowestTemperature: information.maxTemperature, highestTemperature: information.minTemperature)
     }
     @objc func dismiss(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)

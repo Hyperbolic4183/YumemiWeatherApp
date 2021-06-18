@@ -48,7 +48,7 @@ class WeatherViewController: UIViewController {
         }
     }
     func convertWeatherViewState(from information: WeatherInformation) -> WeatherViewState {
-        WeatherViewState(weather: information.weather, lowestTemperature: information.maxTemperature, highestTemperature: information.minTemperature)
+        WeatherViewState(weather: information.weather, minTemperature: information.minTemperature, maxTemperature: information.maxTemperature)
     }
     @objc func dismiss(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)

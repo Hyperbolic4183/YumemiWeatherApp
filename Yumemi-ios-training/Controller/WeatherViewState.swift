@@ -12,11 +12,11 @@ struct WeatherViewState: Equatable {
     let minTemperature: String
     let maxTemperature: String
     
-    init(weather: WeatherInformation.Weather, minTemperature: String, maxTemperature: String) {
-        self.weather = UIImage(named: weather.rawValue)!
-        self.minTemperature = minTemperature
-        self.maxTemperature = maxTemperature
-        switch weather {
+    init(information: WeatherInformation) {
+        self.weather = UIImage(named: information.weather.rawValue)!
+        self.minTemperature = information.minTemperature
+        self.maxTemperature = information.maxTemperature
+        switch information.weather {
         case .sunny:
             self.color = .red
         case .cloudy:

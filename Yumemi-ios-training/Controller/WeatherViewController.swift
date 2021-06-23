@@ -10,9 +10,9 @@ import UIKit
 
 class WeatherViewController: UIViewController {
     let weatherView = WeatherView()
-    var weatherModel: Fetcher
+    var weatherModel: Fetchable
     
-    init(model: Fetcher) {
+    init(model: Fetchable) {
         self.weatherModel = model
         super.init(nibName: nil, bundle: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
@@ -30,14 +30,11 @@ class WeatherViewController: UIViewController {
         weatherView.reloadButton.addTarget(self, action: #selector(reload(_:)), for: .touchUpInside)
         weatherView.closeButton.addTarget(self, action: #selector(dismiss(_:)), for: .touchUpInside)
     }
-    @objc func reload(_ sender: UIButton) {
-        let result = weatherModel.fetchYumemiWeather()
+    
+    func updateView(result: Result<WeatherInformation, WeatherAppError>) {
         switch result {
         case .success(let information):
-            let weather = information.weather
-            let minTemperature = information.minTemperature
-            let maxTemperature = information.maxTemperature
-            let weatherViewState = WeatherViewState(weather, minTemperature, maxTemperature)
+            let weatherViewState = WeatherViewState(information: information)
             weatherView.changeDisplay(weatherViewState)
         case .failure(let error):
             var message = ""
@@ -49,6 +46,11 @@ class WeatherViewController: UIViewController {
             }
             presentAlertController(message)
         }
+    }
+    
+    @objc func reload(_ sender: UIButton) {
+        let result = weatherModel.fetchYumemiWeather()
+        updateView(result: result)
     }
     @objc func dismiss(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)

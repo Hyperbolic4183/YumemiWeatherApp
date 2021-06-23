@@ -11,6 +11,8 @@
 		D93DD7D5264B78A90068CA73 /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93DD7D4264B78A90068CA73 /* Fetcher.swift */; };
 		D943492B2672FFDE0023CFCA /* WeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D943492A2672FFDE0023CFCA /* WeatherResponse.swift */; };
 		D9434939267334790023CFCA /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9434938267334790023CFCA /* InitialViewController.swift */; };
+		D9844F1D267C603100D4630F /* Yumemi_ios_trainingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9844F1C267C603100D4630F /* Yumemi_ios_trainingTests.swift */; };
+		D9844F27267C612000D4630F /* Fetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9844F26267C612000D4630F /* Fetchable.swift */; };
 		D9982535263B730F00E373B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9982534263B730F00E373B8 /* AppDelegate.swift */; };
 		D9982537263B730F00E373B8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9982536263B730F00E373B8 /* SceneDelegate.swift */; };
 		D9982539263B730F00E373B8 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9982538263B730F00E373B8 /* WeatherViewController.swift */; };
@@ -22,11 +24,25 @@
 		D9D4D31C2656825300372FD2 /* WeatherInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D4D31B2656825300372FD2 /* WeatherInformation.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		D9844F1F267C603100D4630F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9982529263B730F00E373B8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D9982530263B730F00E373B8;
+			remoteInfo = "Yumemi-ios-training";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		D919B106263B9D320047898D /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		D93DD7D4264B78A90068CA73 /* Fetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fetcher.swift; sourceTree = "<group>"; };
 		D943492A2672FFDE0023CFCA /* WeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherResponse.swift; sourceTree = "<group>"; };
 		D9434938267334790023CFCA /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		D9844F1A267C603100D4630F /* Yumemi-ios-trainingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Yumemi-ios-trainingTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9844F1C267C603100D4630F /* Yumemi_ios_trainingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yumemi_ios_trainingTests.swift; sourceTree = "<group>"; };
+		D9844F1E267C603100D4630F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D9844F26267C612000D4630F /* Fetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fetchable.swift; sourceTree = "<group>"; };
 		D9982531263B730F00E373B8 /* Yumemi-ios-training.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yumemi-ios-training.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9982534263B730F00E373B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D9982536263B730F00E373B8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -40,6 +56,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D9844F17267C603100D4630F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D998252E263B730F00E373B8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -51,10 +74,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D9844F1B267C603100D4630F /* Yumemi-ios-trainingTests */ = {
+			isa = PBXGroup;
+			children = (
+				D9844F1C267C603100D4630F /* Yumemi_ios_trainingTests.swift */,
+				D9844F1E267C603100D4630F /* Info.plist */,
+			);
+			path = "Yumemi-ios-trainingTests";
+			sourceTree = "<group>";
+		};
 		D9982528263B730F00E373B8 = {
 			isa = PBXGroup;
 			children = (
 				D9982533263B730F00E373B8 /* Yumemi-ios-training */,
+				D9844F1B267C603100D4630F /* Yumemi-ios-trainingTests */,
 				D9982532263B730F00E373B8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				D9982531263B730F00E373B8 /* Yumemi-ios-training.app */,
+				D9844F1A267C603100D4630F /* Yumemi-ios-trainingTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -89,6 +123,7 @@
 				D9D4D31B2656825300372FD2 /* WeatherInformation.swift */,
 				D9B059A42660CB7700566FCA /* WeatherAppError.swift */,
 				D943492A2672FFDE0023CFCA /* WeatherResponse.swift */,
+				D9844F26267C612000D4630F /* Fetchable.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -114,6 +149,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		D9844F19267C603100D4630F /* Yumemi-ios-trainingTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9844F23267C603100D4630F /* Build configuration list for PBXNativeTarget "Yumemi-ios-trainingTests" */;
+			buildPhases = (
+				D9844F16267C603100D4630F /* Sources */,
+				D9844F17267C603100D4630F /* Frameworks */,
+				D9844F18267C603100D4630F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D9844F20267C603100D4630F /* PBXTargetDependency */,
+			);
+			name = "Yumemi-ios-trainingTests";
+			productName = "Yumemi-ios-trainingTests";
+			productReference = D9844F1A267C603100D4630F /* Yumemi-ios-trainingTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D9982530263B730F00E373B8 /* Yumemi-ios-training */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D9982545263B731000E373B8 /* Build configuration list for PBXNativeTarget "Yumemi-ios-training" */;
@@ -143,6 +196,10 @@
 				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1240;
 				TargetAttributes = {
+					D9844F19267C603100D4630F = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = D9982530263B730F00E373B8;
+					};
 					D9982530263B730F00E373B8 = {
 						CreatedOnToolsVersion = 12.4;
 					};
@@ -165,11 +222,19 @@
 			projectRoot = "";
 			targets = (
 				D9982530263B730F00E373B8 /* Yumemi-ios-training */,
+				D9844F19267C603100D4630F /* Yumemi-ios-trainingTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D9844F18267C603100D4630F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D998252F263B730F00E373B8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -182,6 +247,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D9844F16267C603100D4630F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9844F1D267C603100D4630F /* Yumemi_ios_trainingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D998252D263B730F00E373B8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -195,11 +268,20 @@
 				D93DD7D5264B78A90068CA73 /* Fetcher.swift in Sources */,
 				D9B65FE2264E3208002E3578 /* WeatherViewState.swift in Sources */,
 				D943492B2672FFDE0023CFCA /* WeatherResponse.swift in Sources */,
+				D9844F27267C612000D4630F /* Fetchable.swift in Sources */,
 				D9D4D31C2656825300372FD2 /* WeatherInformation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D9844F20267C603100D4630F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D9982530263B730F00E373B8 /* Yumemi-ios-training */;
+			targetProxy = D9844F1F267C603100D4630F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		D998253F263B731000E373B8 /* LaunchScreen.storyboard */ = {
@@ -213,6 +295,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		D9844F21267C603100D4630F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B75CP82UAG;
+				INFOPLIST_FILE = "Yumemi-ios-trainingTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "a-otsuka.Yumemi-ios-trainingTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Yumemi-ios-training.app/Yumemi-ios-training";
+			};
+			name = Debug;
+		};
+		D9844F22267C603100D4630F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B75CP82UAG;
+				INFOPLIST_FILE = "Yumemi-ios-trainingTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "a-otsuka.Yumemi-ios-trainingTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Yumemi-ios-training.app/Yumemi-ios-training";
+			};
+			name = Release;
+		};
 		D9982543263B731000E373B8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -370,6 +492,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D9844F23267C603100D4630F /* Build configuration list for PBXNativeTarget "Yumemi-ios-trainingTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9844F21267C603100D4630F /* Debug */,
+				D9844F22267C603100D4630F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D998252C263B730F00E373B8 /* Build configuration list for PBXProject "Yumemi-ios-training" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

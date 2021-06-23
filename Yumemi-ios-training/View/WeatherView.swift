@@ -16,6 +16,7 @@ class WeatherView: UIView {
     let maxTemperatureLabel = UILabel()
     let closeButton = UIButton(type: .system)
     let reloadButton = UIButton(type: .system)
+    let indicator = UIActivityIndicatorView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -68,6 +69,14 @@ class WeatherView: UIView {
             closeButton.topAnchor.constraint(equalTo: stackViewForImageViewAndLabels.bottomAnchor, constant: 80),
             reloadButton.centerXAnchor.constraint(equalTo: maxTemperatureLabel.centerXAnchor),
             reloadButton.topAnchor.constraint(equalTo: stackViewForLabels.bottomAnchor, constant: 80)
+        ])
+        //indicatorの追加と制約
+        addSubview(indicator)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            indicator.topAnchor.constraint(equalTo: stackViewForImageViewAndLabels.bottomAnchor, constant: 40)
         ])
     }
     

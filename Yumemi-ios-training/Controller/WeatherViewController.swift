@@ -49,8 +49,17 @@ class WeatherViewController: UIViewController {
     }
     
     @objc func reload(_ sender: UIButton) {
-        let result = weatherModel.fetchYumemiWeather()
-        updateView(result: result)
+        var result: Result<WeatherInformation, WeatherAppError>?
+        let queue = DispatchQueue.global(qos: .userInitiated)
+        weatherView.indicator.startAnimating()
+        queue.async {
+            result = self.weatherModel.fetchYumemiWeather()
+            let queue = DispatchQueue.main
+            queue.async {
+                self.updateView(result: result!)
+                self.weatherView.indicator.stopAnimating()
+            }
+        }
     }
     @objc func dismiss(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)

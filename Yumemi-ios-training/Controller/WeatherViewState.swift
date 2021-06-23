@@ -6,7 +6,7 @@
 //
 import UIKit
 
-struct WeatherViewState: Equatable {
+struct WeatherViewState {
     let weather: UIImage
     let color: UIColor
     let minTemperature: String

@@ -33,7 +33,7 @@ class Yumemi_ios_trainingTests: XCTestCase {
         reloadButton.sendActions(for: .touchUpInside)
         XCTAssertEqual(imageView.image!, UIImage(named: "sunny")!)
     }
-    func test_天気予報がcloudyだったときに画面に晴れ画像が表示される() {
+    func test_天気予報がcloudyだったときに画面に曇り画像が表示される() {
         let cloudyWeatherInformation = WeatherInformation(weather: .cloudy, minTemperature: "0", maxTemperature: "0")
         let cloudyModel = TestWeatherModel(weatherInformation: cloudyWeatherInformation)
         
@@ -46,7 +46,7 @@ class Yumemi_ios_trainingTests: XCTestCase {
         reloadButton.sendActions(for: .touchUpInside)
         XCTAssertEqual(imageView.image!, UIImage(named: "cloudy")!)
     }
-    func test_天気予報がrainyだったときに画面に晴れ画像が表示される() {
+    func test_天気予報がrainyだったときに画面に雨画像が表示される() {
         
         let rainyWeatherInformation = WeatherInformation(weather: .rainy, minTemperature: "0", maxTemperature: "0")
         let rainyModel = TestWeatherModel(weatherInformation: rainyWeatherInformation)

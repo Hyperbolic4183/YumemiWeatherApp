@@ -8,7 +8,7 @@
 import YumemiWeather
 import Foundation
 
-struct Fetcher: Testable {
+struct Fetcher: Fetchable {
     
     func fetchYumemiWeather() -> Result<WeatherInformation, WeatherAppError> {
         do {

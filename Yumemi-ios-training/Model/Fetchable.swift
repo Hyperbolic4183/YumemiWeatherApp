@@ -6,6 +6,6 @@
 //
 import Foundation
 
-protocol Testable {
+protocol Fetchable {
     func fetchYumemiWeather() -> Result<WeatherInformation, WeatherAppError>
 }

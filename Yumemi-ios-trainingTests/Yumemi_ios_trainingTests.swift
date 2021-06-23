@@ -12,7 +12,7 @@ class Yumemi_ios_trainingTests: XCTestCase {
     
     func test_天気予報がsunnyだったときに画面に晴れ画像が表示される() {
         
-        struct Sunny: Testable {
+        struct Sunny: Fetchable {
             func fetchYumemiWeather() -> Result<WeatherInformation, WeatherAppError> {
                 .success(WeatherInformation(weather: .sunny, minTemperature: "0", maxTemperature: "0"))
             }
@@ -28,7 +28,7 @@ class Yumemi_ios_trainingTests: XCTestCase {
     }
     func test_天気予報がcloudyだったときに画面に晴れ画像が表示される() {
         
-        struct Cloudy: Testable {
+        struct Cloudy: Fetchable {
             func fetchYumemiWeather() -> Result<WeatherInformation, WeatherAppError> {
                 .success(WeatherInformation(weather: .cloudy, minTemperature: "0", maxTemperature: "0"))
             }
@@ -44,7 +44,7 @@ class Yumemi_ios_trainingTests: XCTestCase {
     }
     func test_天気予報がrainyだったときに画面に晴れ画像が表示される() {
         
-        struct Rainy: Testable {
+        struct Rainy: Fetchable {
             func fetchYumemiWeather() -> Result<WeatherInformation, WeatherAppError> {
                 .success(WeatherInformation(weather: .rainy, minTemperature: "0", maxTemperature: "0"))
             }
@@ -60,7 +60,7 @@ class Yumemi_ios_trainingTests: XCTestCase {
     }
     func test_最高気温がUILabelに反映される() {
         
-        struct MaxTemperature: Testable {
+        struct MaxTemperature: Fetchable {
             
             let maxTemperature: String
             
@@ -85,7 +85,7 @@ class Yumemi_ios_trainingTests: XCTestCase {
     
     func test_最低気温がUILabelに反映される() {
         
-        struct MinTemperature: Testable {
+        struct MinTemperature: Fetchable {
             
             let minTemperature: String
             

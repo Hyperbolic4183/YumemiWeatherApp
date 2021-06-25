@@ -31,7 +31,7 @@ class WeatherViewController: UIViewController {
         weatherView.closeButton.addTarget(self, action: #selector(dismiss(_:)), for: .touchUpInside)
     }
     
-    func updateView(result: Result<WeatherInformation, WeatherAppError>) {
+    func updateView(_ result: Result<WeatherInformation, WeatherAppError>) {
         switch result {
         case .success(let information):
             let weatherViewState = WeatherViewState(information: information)
@@ -48,22 +48,29 @@ class WeatherViewController: UIViewController {
         }
     }
     
-    @objc func reload(_ sender: UIButton) {
-        var result: Result<WeatherInformation, WeatherAppError>?
+    func showIndicator(_ fetch:@escaping @autoclosure () -> Result<WeatherInformation, WeatherAppError>, completion: @escaping (_ result: Result<WeatherInformation, WeatherAppError>) -> Void) {
         let queue = DispatchQueue.global(qos: .userInitiated)
         weatherView.indicator.startAnimating()
         queue.async {
-            result = self.weatherModel.fetchYumemiWeather()
-            let queue = DispatchQueue.main
-            queue.async {
-                self.updateView(result: result!)
+            let mainQueue = DispatchQueue.main
+            mainQueue.async {
+                let fetch = fetch()
+                completion(fetch)
                 self.weatherView.indicator.stopAnimating()
             }
         }
     }
+    
+    @objc func reload(_ sender: UIButton) {
+        showIndicator(self.weatherModel.fetchYumemiWeather()) { result in
+            self.updateView(result)
+        }
+    }
+    
     @objc func dismiss(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
+    
     func presentAlertController(_ message: String) {
         let errorAlert = UIAlertController(title: "エラー", message: message, preferredStyle: .alert)
         let errorAction = UIAlertAction(title: "OK", style: .default)

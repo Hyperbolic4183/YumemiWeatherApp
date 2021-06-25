@@ -49,12 +49,12 @@ class WeatherViewController: UIViewController {
     }
     
     func showIndicator(_ fetch:@escaping @autoclosure () -> Result<WeatherInformation, WeatherAppError>, completion: @escaping (_ result: Result<WeatherInformation, WeatherAppError>) -> Void) {
-        let queue = DispatchQueue.global(qos: .userInitiated)
+        let globalQueue = DispatchQueue.global(qos: .userInitiated)
+        let mainQueue = DispatchQueue.main
         weatherView.indicator.startAnimating()
-        queue.async {
-            let mainQueue = DispatchQueue.main
+        globalQueue.async {
+            let fetch = fetch()
             mainQueue.async {
-                let fetch = fetch()
                 completion(fetch)
                 self.weatherView.indicator.stopAnimating()
             }

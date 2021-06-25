@@ -48,14 +48,14 @@ class WeatherViewController: UIViewController {
         }
     }
     
-    func showIndicator(result:@escaping @autoclosure () -> Result<WeatherInformation, WeatherAppError>, completion: @escaping (_ result: Result<WeatherInformation, WeatherAppError>) -> Void) {
+    func showIndicator(result:@escaping @autoclosure () -> Result<WeatherInformation, WeatherAppError>, while processing: @escaping (_ result: Result<WeatherInformation, WeatherAppError>) -> Void) {
         let globalQueue = DispatchQueue.global(qos: .userInitiated)
         let mainQueue = DispatchQueue.main
         weatherView.indicator.startAnimating()
         globalQueue.async {
             let result = result()
             mainQueue.async {
-                completion(result)
+                processing(result)
                 self.weatherView.indicator.stopAnimating()
             }
         }

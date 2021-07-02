@@ -27,8 +27,8 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        weatherView.reloadButton.addTarget(self, action: #selector(reload(_:)), for: .touchUpInside)
-        weatherView.closeButton.addTarget(self, action: #selector(dismiss(_:)), for: .touchUpInside)
+        weatherView.reloadButtonAddTarget(action: #selector(reload(_:)))
+        weatherView.closeButtonAddTarget(action: #selector(dismiss(_:)))
     }
     
     func updateView(_ result: Result<WeatherInformation, WeatherAppError>) {

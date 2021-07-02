@@ -14,8 +14,8 @@ class WeatherView: UIView {
     private let stackViewForLabels = UIStackView()
     private let minTemperatureLabel = UILabel()
     private let maxTemperatureLabel = UILabel()
-    let closeButton = UIButton(type: .system)
-    let reloadButton = UIButton(type: .system)
+    private let closeButton = UIButton(type: .system)
+    private let reloadButton = UIButton(type: .system)
     private let indicator = UIActivityIndicatorView()
     
     override init(frame: CGRect) {
@@ -129,5 +129,13 @@ class WeatherView: UIView {
         } else {
             indicator.startAnimating()
         }
+    }
+    
+    func reloadButtonAddTarget(action: Selector) {
+        reloadButton.addTarget(self, action: action, for: .touchUpInside)
+    }
+    
+    func closeButtonAddTarget(action: Selector) {
+        reloadButton.addTarget(self, action: action, for: .touchUpInside)
     }
 }

@@ -51,12 +51,12 @@ class WeatherViewController: UIViewController {
     func showIndicator(processing:@escaping () -> Result<WeatherInformation, WeatherAppError>, completion: @escaping (_ result: Result<WeatherInformation, WeatherAppError>) -> Void) {
         let globalQueue = DispatchQueue.global(qos: .userInitiated)
         let mainQueue = DispatchQueue.main
-        weatherView.indicator.startAnimating()
+        weatherView.operateIndicator()
         globalQueue.async {
             let result = processing()
             mainQueue.async {
                 completion(result)
-                self.weatherView.indicator.stopAnimating()
+                self.weatherView.operateIndicator()
             }
         }
     }

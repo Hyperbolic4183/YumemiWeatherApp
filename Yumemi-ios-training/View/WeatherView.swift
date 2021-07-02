@@ -9,14 +9,14 @@ import UIKit
 
 class WeatherView: UIView {
     
-    let stackViewForImageViewAndLabels = UIStackView()
-    let weatherImageView = UIImageView()
-    let stackViewForLabels = UIStackView()
-    let minTemperatureLabel = UILabel()
-    let maxTemperatureLabel = UILabel()
+    private let stackViewForImageViewAndLabels = UIStackView()
+    private let weatherImageView = UIImageView()
+    private let stackViewForLabels = UIStackView()
+    private let minTemperatureLabel = UILabel()
+    private let maxTemperatureLabel = UILabel()
     let closeButton = UIButton(type: .system)
     let reloadButton = UIButton(type: .system)
-    let indicator = UIActivityIndicatorView()
+    private let indicator = UIActivityIndicatorView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -121,5 +121,13 @@ class WeatherView: UIView {
         weatherImageView.tintColor = weatherViewState.color
         minTemperatureLabel.text = String(weatherViewState.minTemperature)
         maxTemperatureLabel.text = String(weatherViewState.maxTemperature)
+    }
+    
+    func operateIndicator() {
+        if indicator.isAnimating {
+            indicator.stopAnimating()
+        } else {
+            indicator.startAnimating()
+        }
     }
 }

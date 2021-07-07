@@ -8,7 +8,7 @@
 import UIKit
 
 
-class WeatherViewController: UIViewController, WeatherViewDelegate {
+class WeatherViewController: UIViewController {
     let weatherView = WeatherView()
     var weatherModel: Fetchable
     
@@ -72,6 +72,11 @@ class WeatherViewController: UIViewController, WeatherViewDelegate {
         errorAlert.addAction(errorAction)
         present(errorAlert, animated: true, completion: nil)
     }
+}
+
+// MARK:- WeatherViewDelegate
+
+extension WeatherViewController: WeatherViewDelegate {
     
     func didTapReloadButton(_ view: WeatherView) {
         showIndicator(processing: self.weatherModel.fetchYumemiWeather) { result in
@@ -83,6 +88,5 @@ class WeatherViewController: UIViewController, WeatherViewDelegate {
         self.dismiss(animated: true, completion: nil)
     }
 }
-
 
 

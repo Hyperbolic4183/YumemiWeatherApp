@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D919B107263B9D320047898D /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D919B106263B9D320047898D /* WeatherView.swift */; };
+		D9331BD4268EFCEB0040FBEA /* WeatherViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9331BD3268EFCEB0040FBEA /* WeatherViewDelegate.swift */; };
 		D93DD7D5264B78A90068CA73 /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93DD7D4264B78A90068CA73 /* Fetcher.swift */; };
 		D943492B2672FFDE0023CFCA /* WeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D943492A2672FFDE0023CFCA /* WeatherResponse.swift */; };
 		D9434939267334790023CFCA /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9434938267334790023CFCA /* InitialViewController.swift */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		D919B106263B9D320047898D /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
+		D9331BD3268EFCEB0040FBEA /* WeatherViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewDelegate.swift; sourceTree = "<group>"; };
 		D93DD7D4264B78A90068CA73 /* Fetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fetcher.swift; sourceTree = "<group>"; };
 		D943492A2672FFDE0023CFCA /* WeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherResponse.swift; sourceTree = "<group>"; };
 		D9434938267334790023CFCA /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 		D9DA6EC12654887000E80C3E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D9331BD3268EFCEB0040FBEA /* WeatherViewDelegate.swift */,
 				D919B106263B9D320047898D /* WeatherView.swift */,
 			);
 			path = View;
@@ -265,6 +268,7 @@
 				D9B059A52660CB7700566FCA /* WeatherAppError.swift in Sources */,
 				D919B107263B9D320047898D /* WeatherView.swift in Sources */,
 				D9434939267334790023CFCA /* InitialViewController.swift in Sources */,
+				D9331BD4268EFCEB0040FBEA /* WeatherViewDelegate.swift in Sources */,
 				D93DD7D5264B78A90068CA73 /* Fetcher.swift in Sources */,
 				D9B65FE2264E3208002E3578 /* WeatherViewState.swift in Sources */,
 				D943492B2672FFDE0023CFCA /* WeatherResponse.swift in Sources */,

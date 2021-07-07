@@ -8,7 +8,7 @@
 import UIKit
 
 
-class WeatherViewController: UIViewController {
+class WeatherViewController: UIViewController, WeatherViewDelegate {
     let weatherView = WeatherView()
     var weatherModel: Fetchable
     
@@ -27,8 +27,7 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        weatherView.reloadButtonAddTarget(action: #selector(reload(_:)))
-        weatherView.closeButtonAddTarget(action: #selector(dismiss(_:)))
+        weatherView.delegate = self
     }
     
     func updateView(_ result: Result<WeatherInformation, WeatherAppError>) {
@@ -67,15 +66,23 @@ class WeatherViewController: UIViewController {
         }
     }
     
-    @objc func dismiss(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
     func presentAlertController(_ message: String) {
         let errorAlert = UIAlertController(title: "エラー", message: message, preferredStyle: .alert)
         let errorAction = UIAlertAction(title: "OK", style: .default)
         errorAlert.addAction(errorAction)
         present(errorAlert, animated: true, completion: nil)
     }
+    
+    func didTapReloadButton(_ view: WeatherView) {
+        showIndicator(processing: self.weatherModel.fetchYumemiWeather) { result in
+            self.updateView(result)
+        }
+    }
+
+    func didTapCloseButton(_ view: WeatherView) {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
+
+
 

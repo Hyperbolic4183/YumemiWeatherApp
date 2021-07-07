@@ -8,7 +8,7 @@
 import UIKit
 
 class WeatherView: UIView {
-    
+    var delegate: WeatherViewDelegate?
     private let stackViewForImageViewAndLabels = UIStackView()
     private let weatherImageView = UIImageView()
     private let stackViewForLabels = UIStackView()
@@ -109,10 +109,12 @@ class WeatherView: UIView {
     }
     
     private func setupCloseButton() {
+        closeButton.addTarget(self, action: #selector(dismiss), for: .touchUpInside)
         closeButton.setTitle("Close", for: .normal)
     }
     
     private func setupReloadButton() {
+        reloadButton.addTarget(self, action: #selector(reload), for: .touchUpInside)
         reloadButton.setTitle("Reload", for: .normal)
     }
     
@@ -131,11 +133,11 @@ class WeatherView: UIView {
         }
     }
     
-    func reloadButtonAddTarget(action: Selector) {
-        reloadButton.addTarget(self, action: action, for: .touchUpInside)
+    @objc func reload() {
+        delegate?.didTapReloadButton(self)
     }
     
-    func closeButtonAddTarget(action: Selector) {
-        reloadButton.addTarget(self, action: action, for: .touchUpInside)
+    @objc func dismiss() {
+        delegate?.didTapCloseButton(self)
     }
 }

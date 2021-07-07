@@ -13,9 +13,12 @@ protocol FetcherDelegate: AnyObject {
     func didOccurError(from error: Error) -> YumemiWeatherError?
 }
 
-struct Fetcher: Fetchable {
+class Fetcher: Fetchable {
     
     var delegate: FetcherDelegate?
+    deinit {
+        print("Fetcher released")
+    }
     
     func fetchYumemiWeather() -> Result<WeatherInformation, WeatherAppError> {
         do {

@@ -46,24 +46,35 @@ class WeatherViewController: UIViewController {
             presentAlertController(message)
         }
     }
+    func showIndicator() {
+        weatherView.switchIndicatorAnimation()
+    }
     
-    func showIndicator(processing:@escaping () -> Result<WeatherInformation, WeatherAppError>, completion: @escaping (_ result: Result<WeatherInformation, WeatherAppError>) -> Void) {
+    func hideIndicator() {
+        weatherView.switchIndicatorAnimation()
+    }
+    
+    func fetch(completion: @escaping (_ result: Result<WeatherInformation, WeatherAppError>) -> Void) {
         let globalQueue = DispatchQueue.global(qos: .userInitiated)
         let mainQueue = DispatchQueue.main
-        weatherView.switchIndicatorAnimation()
         globalQueue.async {
-            let result = processing()
+            let result = self.weatherModel.fetchYumemiWeather()
             mainQueue.async {
                 completion(result)
-                self.weatherView.switchIndicatorAnimation()
             }
         }
     }
     
-    @objc func reload(_ sender: UIButton) {
-        showIndicator(processing: self.weatherModel.fetchYumemiWeather) { result in
-            self.updateView(result)
+    func reload() {
+        showIndicator()
+        fetch() { [weak self] result in
+            self?.updateView(result)
+            self?.hideIndicator()
         }
+    }
+    
+    @objc func reload(_ sender: UIButton) {
+        reload()
     }
     
     func presentAlertController(_ message: String) {
@@ -79,9 +90,7 @@ class WeatherViewController: UIViewController {
 extension WeatherViewController: WeatherViewDelegate {
     
     func didTapReloadButton(_ view: WeatherView) {
-        showIndicator(processing: self.weatherModel.fetchYumemiWeather) { result in
-            self.updateView(result)
-        }
+        reload()
     }
 
     func didTapCloseButton(_ view: WeatherView) {

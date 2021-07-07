@@ -78,7 +78,6 @@ final class WeatherView: UIView {
         //indicatorの追加と制約
         addSubview(indicator)
         indicator.translatesAutoresizingMaskIntoConstraints = false
-        indicator.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             indicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             indicator.topAnchor.constraint(equalTo: stackViewForImageViewAndLabels.bottomAnchor, constant: 40)

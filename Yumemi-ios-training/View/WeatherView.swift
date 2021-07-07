@@ -7,15 +7,21 @@
 
 import UIKit
 
-class WeatherView: UIView {
-    
-    let stackViewForImageViewAndLabels = UIStackView()
-    let weatherImageView = UIImageView()
-    let stackViewForLabels = UIStackView()
-    let minTemperatureLabel = UILabel()
-    let maxTemperatureLabel = UILabel()
-    let closeButton = UIButton(type: .system)
-    let reloadButton = UIButton(type: .system)
+protocol WeatherViewDelegate: AnyObject {
+    func didTapReloadButton(_ view: WeatherView)
+    func didTapCloseButton(_ view: WeatherView)
+}
+
+final class WeatherView: UIView {
+    weak var delegate: WeatherViewDelegate?
+    private let stackViewForImageViewAndLabels = UIStackView()
+    private let weatherImageView = UIImageView()
+    private let stackViewForLabels = UIStackView()
+    private let minTemperatureLabel = UILabel()
+    private let maxTemperatureLabel = UILabel()
+    private let closeButton = UIButton(type: .system)
+    private let reloadButton = UIButton(type: .system)
+    private let indicator = UIActivityIndicatorView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,6 +75,13 @@ class WeatherView: UIView {
             reloadButton.centerXAnchor.constraint(equalTo: maxTemperatureLabel.centerXAnchor),
             reloadButton.topAnchor.constraint(equalTo: stackViewForLabels.bottomAnchor, constant: 80)
         ])
+        //indicatorの追加と制約
+        addSubview(indicator)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            indicator.topAnchor.constraint(equalTo: stackViewForImageViewAndLabels.bottomAnchor, constant: 40)
+        ])
     }
     
     private func setupStackViewForImageViewAndLabels() {
@@ -100,10 +113,12 @@ class WeatherView: UIView {
     }
     
     private func setupCloseButton() {
+        closeButton.addTarget(self, action: #selector(dismiss), for: .touchUpInside)
         closeButton.setTitle("Close", for: .normal)
     }
     
     private func setupReloadButton() {
+        reloadButton.addTarget(self, action: #selector(reload), for: .touchUpInside)
         reloadButton.setTitle("Reload", for: .normal)
     }
     
@@ -112,5 +127,21 @@ class WeatherView: UIView {
         weatherImageView.tintColor = weatherViewState.color
         minTemperatureLabel.text = String(weatherViewState.minTemperature)
         maxTemperatureLabel.text = String(weatherViewState.maxTemperature)
+    }
+    
+    func switchIndicatorAnimation() {
+        if indicator.isAnimating {
+            indicator.stopAnimating()
+        } else {
+            indicator.startAnimating()
+        }
+    }
+    
+    @objc func reload() {
+        delegate?.didTapReloadButton(self)
+    }
+    
+    @objc func dismiss() {
+        delegate?.didTapCloseButton(self)
     }
 }

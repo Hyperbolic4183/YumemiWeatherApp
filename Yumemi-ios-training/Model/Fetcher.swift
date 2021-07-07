@@ -12,7 +12,7 @@ struct Fetcher: Fetchable {
     
     func fetchYumemiWeather() -> Result<WeatherInformation, WeatherAppError> {
         do {
-            let weatherDataString = try YumemiWeather.fetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }")
+            let weatherDataString = try YumemiWeather.syncFetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }")
             let weatherData = Data(weatherDataString.utf8)
             guard let weatherResponse = convert(from: weatherData),
                   let weather = WeatherInformation.Weather(rawValue: weatherResponse.weather) else { return .failure(.unknownError) }

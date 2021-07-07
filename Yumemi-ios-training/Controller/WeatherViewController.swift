@@ -27,11 +27,10 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        weatherView.reloadButton.addTarget(self, action: #selector(reload(_:)), for: .touchUpInside)
-        weatherView.closeButton.addTarget(self, action: #selector(dismiss(_:)), for: .touchUpInside)
+        weatherView.delegate = self
     }
     
-    func updateView(result: Result<WeatherInformation, WeatherAppError>) {
+    func updateView(_ result: Result<WeatherInformation, WeatherAppError>) {
         switch result {
         case .success(let information):
             let weatherViewState = WeatherViewState(information: information)
@@ -48,13 +47,25 @@ class WeatherViewController: UIViewController {
         }
     }
     
+    func showIndicator(processing:@escaping () -> Result<WeatherInformation, WeatherAppError>, completion: @escaping (_ result: Result<WeatherInformation, WeatherAppError>) -> Void) {
+        let globalQueue = DispatchQueue.global(qos: .userInitiated)
+        let mainQueue = DispatchQueue.main
+        weatherView.switchIndicatorAnimation()
+        globalQueue.async {
+            let result = processing()
+            mainQueue.async {
+                completion(result)
+                self.weatherView.switchIndicatorAnimation()
+            }
+        }
+    }
+    
     @objc func reload(_ sender: UIButton) {
-        let result = weatherModel.fetchYumemiWeather()
-        updateView(result: result)
+        showIndicator(processing: self.weatherModel.fetchYumemiWeather) { result in
+            self.updateView(result)
+        }
     }
-    @objc func dismiss(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
-    }
+    
     func presentAlertController(_ message: String) {
         let errorAlert = UIAlertController(title: "エラー", message: message, preferredStyle: .alert)
         let errorAction = UIAlertAction(title: "OK", style: .default)
@@ -62,4 +73,20 @@ class WeatherViewController: UIViewController {
         present(errorAlert, animated: true, completion: nil)
     }
 }
+
+// MARK:- WeatherViewDelegate
+
+extension WeatherViewController: WeatherViewDelegate {
+    
+    func didTapReloadButton(_ view: WeatherView) {
+        showIndicator(processing: self.weatherModel.fetchYumemiWeather) { result in
+            self.updateView(result)
+        }
+    }
+
+    func didTapCloseButton(_ view: WeatherView) {
+        self.dismiss(animated: true, completion: nil)
+    }
+}
+
 

@@ -13,7 +13,7 @@ protocol WeatherViewDelegate: AnyObject {
 }
 
 final class WeatherView: UIView {
-    var delegate: WeatherViewDelegate?
+    weak var delegate: WeatherViewDelegate?
     private let stackViewForImageViewAndLabels = UIStackView()
     private let weatherImageView = UIImageView()
     private let stackViewForLabels = UIStackView()

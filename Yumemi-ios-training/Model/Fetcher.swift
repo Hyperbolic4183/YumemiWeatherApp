@@ -15,7 +15,7 @@ protocol FetcherDelegate: AnyObject {
 
 struct Fetcher: Fetchable {
     
-    weak var delegate: FetcherDelegate?
+    var delegate: FetcherDelegate?
     
     func fetchYumemiWeather() -> Result<WeatherInformation, WeatherAppError> {
         do {

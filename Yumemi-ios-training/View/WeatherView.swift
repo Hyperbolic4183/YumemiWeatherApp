@@ -125,7 +125,7 @@ class WeatherView: UIView {
         maxTemperatureLabel.text = String(weatherViewState.maxTemperature)
     }
     
-    func operateIndicator() {
+    func switchIndicatorAnimation() {
         if indicator.isAnimating {
             indicator.stopAnimating()
         } else {

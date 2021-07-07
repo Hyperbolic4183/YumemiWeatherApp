@@ -15,7 +15,11 @@ class FetchYumemiWeather: FetcherDelegate {
         fetcher.delegate = self
     }
     
-    func syncFetchWeather(_ jsonString: String) throws -> String {
+    func didFetchSyncFetchWeather(_ jsonString: String) throws -> String {
         try YumemiWeather.syncFetchWeather(jsonString)
+    }
+    
+    func didOccurError(from error: Error) -> YumemiWeatherError? {
+        error as? YumemiWeatherError
     }
 }

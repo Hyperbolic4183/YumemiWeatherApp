@@ -9,16 +9,21 @@ import YumemiWeather
 import Foundation
 
 protocol FetcherDelegate: AnyObject {
-    func syncFetchWeather(_ jsonString: String) throws -> String
+    func didFetchSyncFetchWeather(_ jsonString: String) throws -> String
+    func didOccurError(from error: Error) -> YumemiWeatherError?
 }
 
 struct Fetcher: Fetchable {
+    
     weak var delegate: FetcherDelegate?
     
     func fetchYumemiWeather() -> Result<WeatherInformation, WeatherAppError> {
         do {
-            let weatherDataString = try delegate?.syncFetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }")
-            let weatherData = Data(weatherDataString!.utf8)
+            guard  let weatherDataString = try delegate?.didFetchSyncFetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }") else {
+                assertionFailure("weatherDataStringの変換に失敗しました")
+                return .failure(.unknownError)
+            }
+            let weatherData = Data(weatherDataString.utf8)
             guard let weatherResponse = convert(from: weatherData),
                   let weather = WeatherInformation.Weather(rawValue: weatherResponse.weather) else { return .failure(.unknownError) }
             let minTemperature = String(weatherResponse.minTemp)
@@ -26,17 +31,17 @@ struct Fetcher: Fetchable {
             let weatherInformation = WeatherInformation(weather: weather, minTemperature: minTemperature, maxTemperature: maxTemperature)
             return .success(weatherInformation)
             
-        } catch let error as YumemiWeatherError {
-            switch error {
+        } catch let error {
+            guard let _error = delegate?.didOccurError(from: error) else {
+                assertionFailure("エラーの変換に失敗しました")
+                return .failure(.unknownError)
+            }
+            switch _error {
             case .invalidParameterError:
                 return .failure(.invalidParameterError)
             case .unknownError:
                 return .failure(.unknownError)
             }
-            
-        } catch {
-            assertionFailure("想定外のエラーが発生しました")
-            return .failure(.unknownError)
         }
     }
     

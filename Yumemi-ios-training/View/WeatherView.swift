@@ -7,7 +7,12 @@
 
 import UIKit
 
-class WeatherView: UIView {
+protocol WeatherViewDelegate: AnyObject {
+    func didTapReloadButton(_ view: WeatherView)
+    func didTapCloseButton(_ view: WeatherView)
+}
+
+final class WeatherView: UIView {
     var delegate: WeatherViewDelegate?
     private let stackViewForImageViewAndLabels = UIStackView()
     private let weatherImageView = UIImageView()

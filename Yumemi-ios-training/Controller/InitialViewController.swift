@@ -8,9 +8,14 @@
 import UIKit
 
 class InitialViewController: UIViewController {
+    
+    let fetchYumemiWeather = FetchYumemiWeather()
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let weatherViewController = WeatherViewController(model: Fetcher())
+        var fetcher = Fetcher()
+        fetcher.delegate = fetchYumemiWeather
+        let weatherViewController = WeatherViewController(model: fetcher)
         weatherViewController.modalPresentationStyle = .fullScreen
         present(weatherViewController, animated: true)
     }

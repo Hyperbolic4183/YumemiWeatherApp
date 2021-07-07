@@ -9,11 +9,11 @@ import UIKit
 
 class InitialViewController: UIViewController {
     
-    let fetchYumemiWeather = FetchYumemiWeather()
+    let fetchYumemiWeather = FetchYumemiWeather.shared
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let fetcher = Fetcher()
+        var fetcher = Fetcher()
         fetcher.delegate = fetchYumemiWeather
         let weatherViewController = WeatherViewController(model: fetcher)
         weatherViewController.modalPresentationStyle = .fullScreen

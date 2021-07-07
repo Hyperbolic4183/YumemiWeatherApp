@@ -9,6 +9,7 @@ import YumemiWeather
 
 class FetchYumemiWeather: FetcherDelegate {
     
+    static let shared = FetchYumemiWeather()
     var fetcher = Fetcher()
     
     init() {

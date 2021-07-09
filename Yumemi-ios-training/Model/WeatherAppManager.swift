@@ -1,5 +1,5 @@
 //
-//  Fetcher.swift
+//  WeatherAppManager.swift
 //  Yumemi-ios-training
 //
 //  Created by 大塚 周 on 2021/05/12.
@@ -8,14 +8,14 @@
 import YumemiWeather
 import Foundation
 
-protocol FetcherDelegate: AnyObject {
+protocol WeatherAppManagerDelegate: AnyObject {
     func didFetchSyncFetchWeather(_ jsonString: String) throws -> String
     func didOccurError(from error: Error) -> YumemiWeatherError?
 }
 
-class Fetcher: Fetchable {
+class WeatherAppManager: Fetchable {
     
-    var delegate: FetcherDelegate?
+    var delegate: WeatherAppManagerDelegate?
     deinit {
         print("Fetcher released")
     }

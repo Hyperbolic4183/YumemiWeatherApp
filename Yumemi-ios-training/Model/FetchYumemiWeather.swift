@@ -7,10 +7,10 @@
 
 import YumemiWeather
 
-class FetchYumemiWeather: FetcherDelegate {
+class FetchYumemiWeather: WeatherAppManagerDelegate {
     
     static let shared = FetchYumemiWeather()
-    var fetcher = Fetcher()
+    var fetcher = WeatherAppManager()
     
     init() {
         fetcher.delegate = self

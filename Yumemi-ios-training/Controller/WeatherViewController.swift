@@ -47,7 +47,7 @@ class WeatherViewController: UIViewController {
         }
     }
     
-    func showIndicator(processing:@escaping () -> Result<WeatherInformation, WeatherAppError>, completion: @escaping (_ result: Result<WeatherInformation, WeatherAppError>) -> Void) {
+    func showIndicator(while processing:@escaping () -> Result<WeatherInformation, WeatherAppError>, completion: @escaping (_ result: Result<WeatherInformation, WeatherAppError>) -> Void) {
         let globalQueue = DispatchQueue.global(qos: .userInitiated)
         let mainQueue = DispatchQueue.main
         weatherView.switchIndicatorAnimation()
@@ -61,7 +61,7 @@ class WeatherViewController: UIViewController {
     }
     
     @objc func reload(_ sender: UIButton) {
-        showIndicator(processing: self.weatherModel.fetchYumemiWeather) { result in
+        showIndicator(while: self.weatherModel.fetchYumemiWeather) { result in
             self.updateView(result)
         }
     }
@@ -79,7 +79,7 @@ class WeatherViewController: UIViewController {
 extension WeatherViewController: WeatherViewDelegate {
     
     func didTapReloadButton(_ view: WeatherView) {
-        showIndicator(processing: self.weatherModel.fetchYumemiWeather) { result in
+        showIndicator(while: self.weatherModel.fetchYumemiWeather) { result in
             self.updateView(result)
         }
     }

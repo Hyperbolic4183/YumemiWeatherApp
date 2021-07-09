@@ -6,21 +6,21 @@
 //
 
 import YumemiWeather
+import Foundation
 
 class FetchYumemiWeather: WeatherAppManagerDelegate {
 
     static let shared = FetchYumemiWeather()
-    var fetcher = WeatherAppManager()
+    var manager = WeatherAppManager()
     
     init() {
-        fetcher.delegate = self
+        manager.delegate = self
     }
     
     func weatherAppManager(_ manager: WeatherAppManager, didFailWithError error: Error) -> YumemiWeatherError? {
         error as? YumemiWeatherError
     }
     
-    func weatherAppManager(_ manager: WeatherAppManager, didUpdate jsonString: String) throws -> String {
     func weatherAppManager(_ manager: WeatherAppManager, didReload jsonString: String) throws -> String {
         try YumemiWeather.syncFetchWeather(jsonString)
     }

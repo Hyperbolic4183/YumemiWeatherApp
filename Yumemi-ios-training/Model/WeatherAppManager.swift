@@ -9,7 +9,7 @@ import YumemiWeather
 import Foundation
 
 protocol WeatherAppManagerDelegate: AnyObject {
-    func weatherAppManager(_ manager: WeatherAppManager, didUpdate jsonString: String) throws -> String
+    func weatherAppManager(_ manager: WeatherAppManager, didReload jsonString: String) throws -> String
     func weatherAppManager(_ manager: WeatherAppManager, didFailWithError error: Error) -> YumemiWeatherError?
 }
 
@@ -22,7 +22,7 @@ class WeatherAppManager: Fetchable {
     
     func fetchYumemiWeather() -> Result<WeatherInformation, WeatherAppError> {
         do {
-            guard  let weatherDataString = try delegate?.weatherAppManager(self, didUpdate: "{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }") else {
+            guard  let weatherDataString = try delegate?.weatherAppManager(self, didReload: "{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }") else {
                 assertionFailure("weatherDataStringの変換に失敗しました")
                 return .failure(.unknownError)
             }

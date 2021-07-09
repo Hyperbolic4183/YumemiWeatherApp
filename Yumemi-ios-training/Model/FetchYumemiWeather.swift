@@ -21,6 +21,7 @@ class FetchYumemiWeather: WeatherAppManagerDelegate {
     }
     
     func weatherAppManager(_ manager: WeatherAppManager, didUpdate jsonString: String) throws -> String {
+    func weatherAppManager(_ manager: WeatherAppManager, didReload jsonString: String) throws -> String {
         try YumemiWeather.syncFetchWeather(jsonString)
     }
 }

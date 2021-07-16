@@ -102,11 +102,11 @@ extension WeatherViewController: WeatherViewDelegate {
 }
 
 extension WeatherViewController: FetcherDelegate {
-    func fetchManager(_ manager: Fetcher, didReload information: WeatherInformation) {
+    func fetcher(_ manager: Fetcher, didReload information: WeatherInformation) {
         result = .success(information)
     }
     
-    func fetchManager(_ manager: Fetcher, didFailWithError error: WeatherAppError) {
+    func fetcher(_ manager: Fetcher, didFailWithError error: WeatherAppError) {
         result = .failure(error)
     }
 }

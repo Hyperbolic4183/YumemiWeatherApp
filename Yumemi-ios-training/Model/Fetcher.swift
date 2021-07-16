@@ -32,17 +32,17 @@ class Fetcher {
             let minTemperature = String(weatherResponse.minTemp)
             let maxTemperature = String(weatherResponse.maxTemp)
             let weatherInformation = WeatherInformation(weather: weather, minTemperature: minTemperature, maxTemperature: maxTemperature)
-            delegate?.fetchManager(self, didReload: weatherInformation)
+            delegate?.fetcher(self, didReload: weatherInformation)
         } catch let error as YumemiWeatherError {
             switch error {
             case .invalidParameterError:
-                delegate?.fetchManager(self, didFailWithError: .invalidParameterError)
+                delegate?.fetcher(self, didFailWithError: .invalidParameterError)
             case .unknownError:
-                delegate?.fetchManager(self, didFailWithError: .unknownError)
+                delegate?.fetcher(self, didFailWithError: .unknownError)
             }
         } catch {
             assertionFailure("予期せぬエラーが発生しました")
-            delegate?.fetchManager(self, didFailWithError: .unknownError)
+            delegate?.fetcher(self, didFailWithError: .unknownError)
         }
     }
     

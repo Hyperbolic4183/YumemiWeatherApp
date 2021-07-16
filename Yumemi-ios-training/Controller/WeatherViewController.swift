@@ -7,15 +7,18 @@
 
 import UIKit
 
-
 class WeatherViewController: UIViewController {
     let weatherView = WeatherView()
-    var weatherModel: Fetchable
+    let weatherModel: Fetcher
+    var result: Result<WeatherInformation, WeatherAppError>?
     
-    init(model: Fetchable) {
+    init(model: Fetcher) {
         self.weatherModel = model
         super.init(nibName: nil, bundle: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    deinit {
+        print("WeatherViewController released")
     }
     @available(*, unavailable, message: "init(coder:) has not been implemented")
     required init?(coder: NSCoder) {
@@ -28,6 +31,7 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         weatherView.delegate = self
+        weatherModel.delegate = self
     }
     
     func updateView(_ result: Result<WeatherInformation, WeatherAppError>) {
@@ -47,22 +51,26 @@ class WeatherViewController: UIViewController {
         }
     }
     
-    func showIndicator<T>(while processing:@escaping () -> T, completion: @escaping (_ result: T) -> Void) {
+    func showIndicator(while processing:@escaping () -> Void, completion: @escaping () -> Void) {
         let globalQueue = DispatchQueue.global(qos: .userInitiated)
         let mainQueue = DispatchQueue.main
         weatherView.switchIndicatorAnimation()
         globalQueue.async {
-            let result = processing()
+            processing()
             mainQueue.async {
-                completion(result)
+                completion()
                 self.weatherView.switchIndicatorAnimation()
             }
         }
     }
     
     @objc func reload(_ sender: UIButton) {
-        showIndicator(while: self.weatherModel.fetchYumemiWeather) { result in
-            self.updateView(result)
+        showIndicator(while: weatherModel.fetch) { [self] in
+            guard let _result = result else {
+                assertionFailure("resultに値が入る前に処理が走った")
+                return
+            }
+            updateView(_result)
         }
     }
     
@@ -79,8 +87,12 @@ class WeatherViewController: UIViewController {
 extension WeatherViewController: WeatherViewDelegate {
     
     func didTapReloadButton(_ view: WeatherView) {
-        showIndicator(while: self.weatherModel.fetchYumemiWeather) { result in
-            self.updateView(result)
+        showIndicator(while: weatherModel.fetch) { [self] in
+            guard let _result = result else {
+                assertionFailure("resultに値が入る前に処理が走った")
+                return
+            }
+            updateView(_result)
         }
     }
 
@@ -89,4 +101,12 @@ extension WeatherViewController: WeatherViewDelegate {
     }
 }
 
-
+extension WeatherViewController: FetcherDelegate {
+    func fetchManager(_ manager: Fetcher, didReload information: WeatherInformation) {
+        result = .success(information)
+    }
+    
+    func fetchManager(_ manager: Fetcher, didFailWithError error: WeatherAppError) {
+        result = .failure(error)
+    }
+}

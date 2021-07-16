@@ -9,8 +9,6 @@ import UIKit
 
 class InitialViewController: UIViewController {
     
-    //let fetchYumemiWeather = FetchYumemiWeather.shared
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         

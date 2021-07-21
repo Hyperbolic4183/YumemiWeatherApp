@@ -12,8 +12,7 @@ class InitialViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let fetcher = Fetcher()
-        let weatherViewController = WeatherViewController(model: fetcher)
+        let weatherViewController = WeatherViewController(model: Fetcher())
         weatherViewController.modalPresentationStyle = .fullScreen
         present(weatherViewController, animated: true)
     }

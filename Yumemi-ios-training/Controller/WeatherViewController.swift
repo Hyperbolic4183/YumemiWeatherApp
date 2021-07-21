@@ -8,9 +8,9 @@
 import UIKit
 
 class WeatherViewController: UIViewController {
-    let weatherView = WeatherView()
-    let weatherModel: Fetcher
-    var result: Result<WeatherInformation, WeatherAppError>?
+    private let weatherView = WeatherView()
+    private let weatherModel: Fetcher
+    private var result: Result<WeatherInformation, WeatherAppError>?
     
     init(model: Fetcher) {
         self.weatherModel = model

@@ -9,8 +9,8 @@ import YumemiWeather
 import Foundation
 
 protocol FetcherDelegate: AnyObject {
-    func fetcher(_ fetcher: Fetcher, didFetch information: WeatherInformation)
-    func fetcher(_ fetcher: Fetcher, didFailWithError error: WeatherAppError)
+    func fetcher(_ fetcher: Fetchable, didFetch information: WeatherInformation)
+    func fetcher(_ fetcher: Fetchable, didFailWithError error: WeatherAppError)
 }
 
 class Fetcher: Fetchable {

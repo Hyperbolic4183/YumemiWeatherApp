@@ -8,8 +8,8 @@
 import UIKit
 
 class WeatherViewController: UIViewController {
-     let weatherView = WeatherView()
-     var weatherModel: Fetchable
+    private let weatherView = WeatherView()
+    private var weatherModel: Fetchable
     private var result: Result<WeatherInformation, WeatherAppError>?
     
     init(model: Fetchable) {
@@ -102,11 +102,11 @@ extension WeatherViewController: WeatherViewDelegate {
 }
 
 extension WeatherViewController: FetcherDelegate {
-    func fetcher(_ fetcher: Fetcher, didFetch information: WeatherInformation) {
+    func fetcher(_ fetcher: Fetchable, didFetch information: WeatherInformation) {
         result = .success(information)
     }
     
-    func fetcher(_ fetcher: Fetcher, didFailWithError error: WeatherAppError) {
+    func fetcher(_ fetcher: Fetchable, didFailWithError error: WeatherAppError) {
         result = .failure(error)
     }
 }

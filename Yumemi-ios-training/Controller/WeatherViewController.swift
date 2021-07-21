@@ -102,7 +102,7 @@ extension WeatherViewController: WeatherViewDelegate {
 }
 
 extension WeatherViewController: FetcherDelegate {
-    func fetcher(_ fetcher: Fetcher, didReload information: WeatherInformation) {
+    func fetcher(_ fetcher: Fetcher, didFetch information: WeatherInformation) {
         result = .success(information)
     }
     

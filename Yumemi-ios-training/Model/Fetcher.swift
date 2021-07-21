@@ -9,7 +9,7 @@ import YumemiWeather
 import Foundation
 
 protocol FetcherDelegate: AnyObject {
-    func fetcher(_ fetcher: Fetcher, didReload information: WeatherInformation)
+    func fetcher(_ fetcher: Fetcher, didFetch information: WeatherInformation)
     func fetcher(_ fetcher: Fetcher, didFailWithError error: WeatherAppError)
 }
 
@@ -32,7 +32,7 @@ class Fetcher {
             let minTemperature = String(weatherResponse.minTemp)
             let maxTemperature = String(weatherResponse.maxTemp)
             let weatherInformation = WeatherInformation(weather: weather, minTemperature: minTemperature, maxTemperature: maxTemperature)
-            delegate?.fetcher(self, didReload: weatherInformation)
+            delegate?.fetcher(self, didFetch: weatherInformation)
         } catch let error as YumemiWeatherError {
             switch error {
             case .invalidParameterError:

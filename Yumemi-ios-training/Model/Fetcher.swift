@@ -23,10 +23,12 @@ class Fetcher {
             let weatherData = Data(weatherDataString.utf8)
             guard let weatherResponse = convert(from: weatherData) else {
                 assertionFailure("convertに失敗")
+                delegate?.fetcher(self, didFailWithError: .unknownError)
                 return
             }
             guard let weather = WeatherInformation.Weather(rawValue: weatherResponse.weather) else {
                 assertionFailure("Weatherのイニシャライザに失敗")
+                delegate?.fetcher(self, didFailWithError: .unknownError)
                 return
             }
             let minTemperature = String(weatherResponse.minTemp)

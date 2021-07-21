@@ -66,11 +66,11 @@ class WeatherViewController: UIViewController {
     
     @objc func reload(_ sender: UIButton) {
         showIndicator(while: weatherModel.fetch) { [self] in
-            guard let _result = result else {
+            guard let result = result else {
                 assertionFailure("resultに値が入る前に処理が走った")
                 return
             }
-            updateView(_result)
+            updateView(result)
         }
     }
     

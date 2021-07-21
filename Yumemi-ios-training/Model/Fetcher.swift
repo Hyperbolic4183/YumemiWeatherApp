@@ -13,7 +13,7 @@ protocol FetcherDelegate: AnyObject {
     func fetcher(_ fetcher: Fetcher, didFailWithError error: WeatherAppError)
 }
 
-class Fetcher {
+class Fetcher: Fetchable {
     
     weak var delegate: FetcherDelegate?
     

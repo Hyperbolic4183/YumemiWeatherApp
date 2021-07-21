@@ -7,5 +7,6 @@
 import Foundation
 
 protocol Fetchable {
-    func fetchYumemiWeather() -> Result<WeatherInformation, WeatherAppError>
+    var delegate: FetcherDelegate? { get set }
+    func fetch()
 }

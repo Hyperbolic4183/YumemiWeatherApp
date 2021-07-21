@@ -10,7 +10,6 @@ import UIKit
 class WeatherViewController: UIViewController {
     private let weatherView = WeatherView()
     private var weatherModel: Fetchable
-    private var result: Result<WeatherInformation, WeatherAppError>?
     
     init(model: Fetchable) {
         self.weatherModel = model
@@ -51,26 +50,30 @@ class WeatherViewController: UIViewController {
         }
     }
     
-    func showIndicator(while processing:@escaping () -> Void, completion: @escaping () -> Void) {
+    func updateView(success information: WeatherInformation) {
+        let weatherViewState = WeatherViewState(information: information)
+        weatherView.changeDisplay(weatherViewState)
+    }
+    
+    func updateView(failure error: WeatherAppError) {
+        var message = ""
+        switch error {
+        case .invalidParameterError:
+            message = "不適切な値が設定されました"
+        case .unknownError:
+            message = "予期せぬエラーが発生しました"
+        }
+        presentAlertController(message)
+    }
+    
+    @objc func reload(_ sender: UIButton) {
         let globalQueue = DispatchQueue.global(qos: .userInitiated)
         let mainQueue = DispatchQueue.main
         weatherView.switchIndicatorAnimation()
         globalQueue.async {
-            processing()
-            mainQueue.async {
-                completion()
-                self.weatherView.switchIndicatorAnimation()
+            mainQueue.async { [self] in
+                weatherModel.fetch()
             }
-        }
-    }
-    
-    @objc func reload(_ sender: UIButton) {
-        showIndicator(while: weatherModel.fetch) { [self] in
-            guard let result = result else {
-                assertionFailure("resultに値が入る前に処理が走った")
-                return
-            }
-            updateView(result)
         }
     }
     
@@ -87,12 +90,13 @@ class WeatherViewController: UIViewController {
 extension WeatherViewController: WeatherViewDelegate {
     
     func didTapReloadButton(_ view: WeatherView) {
-        showIndicator(while: weatherModel.fetch) { [self] in
-            guard let result = result else {
-                assertionFailure("resultに値が入る前に処理が走った")
-                return
+        let globalQueue = DispatchQueue.global(qos: .userInitiated)
+        let mainQueue = DispatchQueue.main
+        weatherView.switchIndicatorAnimation()
+        globalQueue.async {
+            mainQueue.async { [self] in
+                weatherModel.fetch()
             }
-            updateView(result)
         }
     }
 
@@ -101,12 +105,15 @@ extension WeatherViewController: WeatherViewDelegate {
     }
 }
 
+// MARK:- FetcherDelegate
 extension WeatherViewController: FetcherDelegate {
     func fetcher(_ fetcher: Fetchable, didFetch information: WeatherInformation) {
-        result = .success(information)
+        weatherView.switchIndicatorAnimation()
+        updateView(success: information)
     }
     
     func fetcher(_ fetcher: Fetchable, didFailWithError error: WeatherAppError) {
-        result = .failure(error)
+        weatherView.switchIndicatorAnimation()
+        updateView(failure: error)
     }
 }

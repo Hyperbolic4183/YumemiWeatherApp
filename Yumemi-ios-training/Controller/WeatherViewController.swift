@@ -33,29 +33,12 @@ class WeatherViewController: UIViewController {
         weatherModel.delegate = self
     }
     
-    func updateView(_ result: Result<WeatherInformation, WeatherAppError>) {
-        switch result {
-        case .success(let information):
-            let weatherViewState = WeatherViewState(information: information)
-            weatherView.changeDisplay(weatherViewState)
-        case .failure(let error):
-            var message = ""
-            switch error {
-            case .invalidParameterError:
-                message = "不適切な値が設定されました"
-            case .unknownError:
-                message = "予期せぬエラーが発生しました"
-            }
-            presentAlertController(message)
-        }
-    }
-    
-    func updateView(success information: WeatherInformation) {
+    private func updateView(onSuccess information: WeatherInformation) {
         let weatherViewState = WeatherViewState(information: information)
         weatherView.changeDisplay(weatherViewState)
     }
     
-    func updateView(failure error: WeatherAppError) {
+    private func updateView(onFailure error: WeatherAppError) {
         var message = ""
         switch error {
         case .invalidParameterError:
@@ -109,11 +92,11 @@ extension WeatherViewController: WeatherViewDelegate {
 extension WeatherViewController: FetcherDelegate {
     func fetcher(_ fetcher: Fetchable, didFetch information: WeatherInformation) {
         weatherView.switchIndicatorAnimation()
-        updateView(success: information)
+        updateView(onSuccess: information)
     }
     
     func fetcher(_ fetcher: Fetchable, didFailWithError error: WeatherAppError) {
         weatherView.switchIndicatorAnimation()
-        updateView(failure: error)
+        updateView(onFailure: error)
     }
 }

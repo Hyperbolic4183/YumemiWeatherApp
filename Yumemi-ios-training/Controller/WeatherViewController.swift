@@ -14,7 +14,7 @@ class WeatherViewController: UIViewController {
     init(model: Fetchable) {
         self.weatherModel = model
         super.init(nibName: nil, bundle: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reload(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     deinit {
         print("WeatherViewController released")
@@ -49,11 +49,7 @@ class WeatherViewController: UIViewController {
         presentAlertController(message)
     }
     
-    @objc func reload(_ sender: UIButton) {
-        reload()
-    }
-    
-    func reload() {
+    @objc func reload() {
         weatherView.switchIndicatorAnimation()
         DispatchQueue.main.async { [weak self] in
             self?.weatherModel.fetch()
@@ -84,6 +80,7 @@ extension WeatherViewController: WeatherViewDelegate {
 
 // MARK:- FetcherDelegate
 extension WeatherViewController: FetcherDelegate {
+    
     func fetcher(_ fetcher: Fetchable, didFetch information: WeatherInformation) {
         updateView(onSuccess: information)
     }

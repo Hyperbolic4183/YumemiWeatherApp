@@ -50,13 +50,14 @@ class WeatherViewController: UIViewController {
     }
     
     @objc func reload(_ sender: UIButton) {
-        let globalQueue = DispatchQueue.global(qos: .userInitiated)
-        let mainQueue = DispatchQueue.main
+        reload()
+    }
+    
+    func reload() {
         weatherView.switchIndicatorAnimation()
-        globalQueue.async {
-            mainQueue.async { [self] in
-                weatherModel.fetch()
-            }
+        DispatchQueue.main.async { [weak self] in
+            self?.weatherModel.fetch()
+            self?.weatherView.switchIndicatorAnimation()
         }
     }
     
@@ -73,14 +74,7 @@ class WeatherViewController: UIViewController {
 extension WeatherViewController: WeatherViewDelegate {
     
     func didTapReloadButton(_ view: WeatherView) {
-        let globalQueue = DispatchQueue.global(qos: .userInitiated)
-        let mainQueue = DispatchQueue.main
-        weatherView.switchIndicatorAnimation()
-        globalQueue.async {
-            mainQueue.async { [self] in
-                weatherModel.fetch()
-            }
-        }
+        reload()
     }
 
     func didTapCloseButton(_ view: WeatherView) {
@@ -91,12 +85,10 @@ extension WeatherViewController: WeatherViewDelegate {
 // MARK:- FetcherDelegate
 extension WeatherViewController: FetcherDelegate {
     func fetcher(_ fetcher: Fetchable, didFetch information: WeatherInformation) {
-        weatherView.switchIndicatorAnimation()
         updateView(onSuccess: information)
     }
     
     func fetcher(_ fetcher: Fetchable, didFailWithError error: WeatherAppError) {
-        weatherView.switchIndicatorAnimation()
         updateView(onFailure: error)
     }
 }

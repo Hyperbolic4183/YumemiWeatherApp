@@ -39,7 +39,7 @@ class WeatherViewController: UIViewController {
     }
     
     private func updateView(onFailure error: WeatherAppError) {
-        var message = ""
+        let message: String
         switch error {
         case .invalidParameterError:
             message = "不適切な値が設定されました"
@@ -78,14 +78,14 @@ extension WeatherViewController: WeatherViewDelegate {
 // MARK:- FetcherDelegate
 extension WeatherViewController: FetcherDelegate {
     
-    func fetcher(_ fetcher: Fetchable?, didFetch information: WeatherInformation) {
+    func fetch(_ fetcher: Fetchable?, didFetch information: WeatherInformation) {
         DispatchQueue.main.async { [weak self] in
             self?.updateView(onSuccess: information)
             self?.weatherView.switchIndicatorAnimation()
         }
     }
     
-    func fetcher(_ fetcher: Fetchable?, didFailWithError error: WeatherAppError) {
+    func fetch(_ fetcher: Fetchable?, didFailWithError error: WeatherAppError) {
         DispatchQueue.main.async { [weak self] in
             self?.updateView(onFailure: error)
             self?.weatherView.switchIndicatorAnimation()

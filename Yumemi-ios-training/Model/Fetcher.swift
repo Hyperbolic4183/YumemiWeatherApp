@@ -13,13 +13,12 @@ protocol FetcherDelegate: AnyObject {
     func fetch(_ fetchable: Fetchable?, didFailWithError error: WeatherAppError)
 }
 
-class Fetcher: Fetchable {
+final class Fetcher: Fetchable {
     
-    let globalQueue = DispatchQueue.global(qos: .userInitiated)
     weak var delegate: FetcherDelegate?
     
     func fetch() {
-        globalQueue.async { [weak self] in
+        DispatchQueue.global().async { [weak self] in
             do {
                 let weatherDataString = try YumemiWeather.syncFetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }")
                 let weatherData = Data(weatherDataString.utf8)

@@ -13,7 +13,7 @@ protocol FetcherDelegate: AnyObject {
     func fetch(_ fetchable: Fetchable?, didFailWithError error: WeatherAppError)
 }
 
-class Fetcher: Fetchable {
+final class Fetcher: Fetchable {
     
     let globalQueue = DispatchQueue.global(qos: .userInitiated)
     weak var delegate: FetcherDelegate?

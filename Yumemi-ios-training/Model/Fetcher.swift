@@ -25,28 +25,28 @@ class Fetcher: Fetchable {
                 let weatherData = Data(weatherDataString.utf8)
                 guard let weatherResponse = self?.convert(from: weatherData) else {
                     assertionFailure("convertに失敗")
-                    self?.delegate?.fetcher(self, didFailWithError: .unknownError)
+                    self?.delegate?.fetch(self, didFailWithError: .unknownError)
                     return
                 }
                 guard let weather = WeatherInformation.Weather(rawValue: weatherResponse.weather) else {
                     assertionFailure("Weatherのイニシャライザに失敗")
-                    self?.delegate?.fetcher(self, didFailWithError: .unknownError)
+                    self?.delegate?.fetch(self, didFailWithError: .unknownError)
                     return
                 }
                 let minTemperature = String(weatherResponse.minTemp)
                 let maxTemperature = String(weatherResponse.maxTemp)
                 let weatherInformation = WeatherInformation(weather: weather, minTemperature: minTemperature, maxTemperature: maxTemperature)
-                self?.delegate?.fetcher(self, didFetch: weatherInformation)
+                self?.delegate?.fetch(self, didFetch: weatherInformation)
             } catch let error as YumemiWeatherError {
                 switch error {
                 case .invalidParameterError:
-                    self?.delegate?.fetcher(self, didFailWithError: .invalidParameterError)
+                    self?.delegate?.fetch(self, didFailWithError: .invalidParameterError)
                 case .unknownError:
-                    self?.delegate?.fetcher(self, didFailWithError: .unknownError)
+                    self?.delegate?.fetch(self, didFailWithError: .unknownError)
                 }
             } catch {
                 assertionFailure("予期せぬエラーが発生しました")
-                self?.delegate?.fetcher(self, didFailWithError: .unknownError)
+                self?.delegate?.fetch(self, didFailWithError: .unknownError)
             }
         }
     }

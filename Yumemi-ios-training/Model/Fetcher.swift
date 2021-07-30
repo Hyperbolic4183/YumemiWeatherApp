@@ -37,22 +37,17 @@ class Fetcher: Fetchable {
                 let maxTemperature = String(weatherResponse.maxTemp)
                 let weatherInformation = WeatherInformation(weather: weather, minTemperature: minTemperature, maxTemperature: maxTemperature)
                 self?.delegate?.fetcher(self, didFetch: weatherInformation)
-                
             } catch let error as YumemiWeatherError {
                 switch error {
                 case .invalidParameterError:
                     self?.delegate?.fetcher(self, didFailWithError: .invalidParameterError)
-                    
                 case .unknownError:
                     self?.delegate?.fetcher(self, didFailWithError: .unknownError)
-                    
                 }
             } catch {
                 assertionFailure("予期せぬエラーが発生しました")
                 self?.delegate?.fetcher(self, didFailWithError: .unknownError)
-                
             }
-            
         }
     }
     

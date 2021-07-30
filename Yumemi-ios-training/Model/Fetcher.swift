@@ -9,42 +9,50 @@ import YumemiWeather
 import Foundation
 
 protocol FetcherDelegate: AnyObject {
-    func fetcher(_ fetcher: Fetchable, didFetch information: WeatherInformation)
-    func fetcher(_ fetcher: Fetchable, didFailWithError error: WeatherAppError)
+    func fetcher(_ fetcher: Fetchable?, didFetch information: WeatherInformation)
+    func fetcher(_ fetcher: Fetchable?, didFailWithError error: WeatherAppError)
 }
 
 class Fetcher: Fetchable {
     
+    let globalQueue = DispatchQueue.global(qos: .userInitiated)
     weak var delegate: FetcherDelegate?
     
     func fetch() {
-        do {
-            let weatherDataString = try YumemiWeather.syncFetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }")
-            let weatherData = Data(weatherDataString.utf8)
-            guard let weatherResponse = convert(from: weatherData) else {
-                assertionFailure("convertに失敗")
-                delegate?.fetcher(self, didFailWithError: .unknownError)
-                return
+        globalQueue.async { [weak self] in
+            do {
+                let weatherDataString = try YumemiWeather.syncFetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }")
+                let weatherData = Data(weatherDataString.utf8)
+                guard let weatherResponse = self?.convert(from: weatherData) else {
+                    assertionFailure("convertに失敗")
+                    self?.delegate?.fetcher(self, didFailWithError: .unknownError)
+                    return
+                }
+                guard let weather = WeatherInformation.Weather(rawValue: weatherResponse.weather) else {
+                    assertionFailure("Weatherのイニシャライザに失敗")
+                    self?.delegate?.fetcher(self, didFailWithError: .unknownError)
+                    return
+                }
+                let minTemperature = String(weatherResponse.minTemp)
+                let maxTemperature = String(weatherResponse.maxTemp)
+                let weatherInformation = WeatherInformation(weather: weather, minTemperature: minTemperature, maxTemperature: maxTemperature)
+                self?.delegate?.fetcher(self, didFetch: weatherInformation)
+                
+            } catch let error as YumemiWeatherError {
+                switch error {
+                case .invalidParameterError:
+                    self?.delegate?.fetcher(self, didFailWithError: .invalidParameterError)
+                    
+                case .unknownError:
+                    self?.delegate?.fetcher(self, didFailWithError: .unknownError)
+                    
+                }
+            } catch {
+                assertionFailure("予期せぬエラーが発生しました")
+                self?.delegate?.fetcher(self, didFailWithError: .unknownError)
+                
             }
-            guard let weather = WeatherInformation.Weather(rawValue: weatherResponse.weather) else {
-                assertionFailure("Weatherのイニシャライザに失敗")
-                delegate?.fetcher(self, didFailWithError: .unknownError)
-                return
-            }
-            let minTemperature = String(weatherResponse.minTemp)
-            let maxTemperature = String(weatherResponse.maxTemp)
-            let weatherInformation = WeatherInformation(weather: weather, minTemperature: minTemperature, maxTemperature: maxTemperature)
-            delegate?.fetcher(self, didFetch: weatherInformation)
-        } catch let error as YumemiWeatherError {
-            switch error {
-            case .invalidParameterError:
-                delegate?.fetcher(self, didFailWithError: .invalidParameterError)
-            case .unknownError:
-                delegate?.fetcher(self, didFailWithError: .unknownError)
-            }
-        } catch {
-            assertionFailure("予期せぬエラーが発生しました")
-            delegate?.fetcher(self, didFailWithError: .unknownError)
+            
         }
     }
     

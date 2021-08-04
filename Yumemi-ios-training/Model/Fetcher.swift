@@ -8,14 +8,9 @@
 import YumemiWeather
 import Foundation
 
-protocol FetcherDelegate: AnyObject {
-    func fetch(_ fetchable: Fetchable?, didFetch information: WeatherInformation)
-    func fetch(_ fetchable: Fetchable?, didFailWithError error: WeatherAppError)
-}
-
 final class Fetcher: Fetchable {
     
-    weak var delegate: FetcherDelegate?
+    weak var delegate: FetchableDelegate?
     
     func fetch() {
         DispatchQueue.global().async { [weak self] in

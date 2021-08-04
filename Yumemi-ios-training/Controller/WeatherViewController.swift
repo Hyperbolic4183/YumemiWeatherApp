@@ -76,7 +76,7 @@ extension WeatherViewController: WeatherViewDelegate {
 }
 
 // MARK:- FetcherDelegate
-extension WeatherViewController: FetcherDelegate {
+extension WeatherViewController: FetchableDelegate {
     
     func fetch(_ fetcher: Fetchable?, didFetch information: WeatherInformation) {
         DispatchQueue.main.async { [weak self] in

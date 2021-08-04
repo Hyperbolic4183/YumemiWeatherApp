@@ -6,7 +6,12 @@
 //
 import Foundation
 
+protocol FetchableDelegate: AnyObject {
+    func fetch(_ fetchable: Fetchable?, didFetch information: WeatherInformation)
+    func fetch(_ fetchable: Fetchable?, didFailWithError error: WeatherAppError)
+}
+
 protocol Fetchable {
-    var delegate: FetcherDelegate? { get set }
+    var delegate: FetchableDelegate? { get set }
     func fetch()
 }

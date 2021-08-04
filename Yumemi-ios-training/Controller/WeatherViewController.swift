@@ -10,7 +10,6 @@ import UIKit
 class WeatherViewController: UIViewController {
     private let weatherView = WeatherView()
     private var weatherModel: Fetchable
-    
     init(model: Fetchable) {
         self.weatherModel = model
         super.init(nibName: nil, bundle: nil)
@@ -50,6 +49,7 @@ class WeatherViewController: UIViewController {
     }
     
     @objc func reload() {
+        weatherView.switchLoadingView()
         weatherView.switchIndicatorAnimation()
         weatherModel.fetch()
     }
@@ -82,6 +82,7 @@ extension WeatherViewController: FetchableDelegate {
         DispatchQueue.main.async { [weak self] in
             self?.updateView(onSuccess: information)
             self?.weatherView.switchIndicatorAnimation()
+            self?.weatherView.switchLoadingView()
         }
     }
     
@@ -89,6 +90,7 @@ extension WeatherViewController: FetchableDelegate {
         DispatchQueue.main.async { [weak self] in
             self?.updateView(onFailure: error)
             self?.weatherView.switchIndicatorAnimation()
+            self?.weatherView.switchLoadingView()
         }
     }
 }

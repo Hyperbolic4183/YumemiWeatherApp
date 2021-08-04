@@ -54,7 +54,7 @@ class WeatherViewController: UIViewController {
         weatherModel.fetch()
     }
     
-    func presentAlertController(_ message: String) {
+    private func presentAlertController(_ message: String) {
         let errorAlert = UIAlertController(title: "エラー", message: message, preferredStyle: .alert)
         let errorAction = UIAlertAction(title: "OK", style: .default)
         errorAlert.addAction(errorAction)

@@ -45,7 +45,7 @@ final class Fetcher: Fetchable {
         }
     }
     
-    func convert(from weatherData: Data) -> WeatherResponse? {
+    private func convert(from weatherData: Data) -> WeatherResponse? {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         decoder.keyDecodingStrategy = .convertFromSnakeCase

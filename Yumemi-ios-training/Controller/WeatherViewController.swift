@@ -29,29 +29,33 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         weatherView.delegate = self
-        weatherModel.delegate = self
     }
     
-    private func updateView(onSuccess information: WeatherInformation) {
-        let weatherViewState = WeatherViewState(information: information)
-        weatherView.changeDisplay(weatherViewState)
-    }
-    
-    private func updateView(onFailure error: WeatherAppError) {
-        let message: String
-        switch error {
-        case .invalidParameterError:
-            message = "不適切な値が設定されました"
-        case .unknownError:
-            message = "予期せぬエラーが発生しました"
+    private func updateView(_ result: Result<WeatherInformation, WeatherAppError>) {
+        switch result {
+        case .success(let information):
+            let weatherViewState = WeatherViewState(information: information)
+            weatherView.changeDisplay(weatherViewState)
+        case .failure(let error):
+            var message = ""
+            switch error {
+            case .invalidParameterError:
+                message = "不適切な値が設定されました"
+            case .unknownError:
+                message = "予期せぬエラーが発生しました"
+            }
+            presentAlertController(message)
         }
-        presentAlertController(message)
     }
     
     @objc func reload() {
         weatherView.switchLoadingView()
         weatherView.switchIndicatorAnimation()
-        weatherModel.fetch()
+        weatherModel.fetch { result in
+            self.updateView(result)
+            self.weatherView.switchLoadingView()
+            self.weatherView.switchIndicatorAnimation()
+        }
     }
     
     private func presentAlertController(_ message: String) {
@@ -72,25 +76,5 @@ extension WeatherViewController: WeatherViewDelegate {
 
     func didTapCloseButton(_ view: WeatherView) {
         self.dismiss(animated: true, completion: nil)
-    }
-}
-
-// MARK:- FetcherDelegate
-extension WeatherViewController: FetchableDelegate {
-    
-    func fetch(_ fetcher: Fetchable?, didFetch information: WeatherInformation) {
-        DispatchQueue.main.async { [weak self] in
-            self?.updateView(onSuccess: information)
-            self?.weatherView.switchIndicatorAnimation()
-            self?.weatherView.switchLoadingView()
-        }
-    }
-    
-    func fetch(_ fetcher: Fetchable?, didFailWithError error: WeatherAppError) {
-        DispatchQueue.main.async { [weak self] in
-            self?.updateView(onFailure: error)
-            self?.weatherView.switchIndicatorAnimation()
-            self?.weatherView.switchLoadingView()
-        }
     }
 }

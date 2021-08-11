@@ -22,6 +22,7 @@ final class WeatherView: UIView {
     private let closeButton = UIButton(type: .system)
     private let reloadButton = UIButton(type: .system)
     private let indicator = UIActivityIndicatorView()
+    private let loadingView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,6 +43,7 @@ final class WeatherView: UIView {
         setupHighestTemperatureLabel()
         setupCloseButton()
         setupReloadButton()
+        setupLoadingView()
     }
     
     private func addSubviewConstraints() {
@@ -122,6 +124,11 @@ final class WeatherView: UIView {
         reloadButton.setTitle("Reload", for: .normal)
     }
     
+    private func setupLoadingView() {
+        loadingView.alpha = 0.2
+        loadingView.backgroundColor = .black
+    }
+    
     func changeDisplay(_ weatherViewState: WeatherViewState) {
         weatherImageView.image = weatherViewState.weather
         weatherImageView.tintColor = weatherViewState.color
@@ -134,6 +141,14 @@ final class WeatherView: UIView {
             indicator.stopAnimating()
         } else {
             indicator.startAnimating()
+        }
+    }
+    
+    func switchLoadingView() {
+        if loadingView.isDescendant(of: self) {
+            loadingView.removeFromSuperview()
+        } else {
+            addSubview(loadingView)
         }
     }
     

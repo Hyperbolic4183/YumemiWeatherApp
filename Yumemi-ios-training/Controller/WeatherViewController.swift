@@ -49,9 +49,13 @@ class WeatherViewController: UIViewController {
     }
     
     @objc func reload() {
+        switchView()
+        weatherModel.fetch()
+    }
+    
+    private func switchView() {
         weatherView.switchLoadingView()
         weatherView.switchIndicatorAnimation()
-        weatherModel.fetch()
     }
     
     private func presentAlertController(_ message: String) {
@@ -81,16 +85,14 @@ extension WeatherViewController: FetchableDelegate {
     func fetch(_ fetcher: Fetchable?, didFetch information: WeatherInformation) {
         DispatchQueue.main.async { [weak self] in
             self?.updateView(onSuccess: information)
-            self?.weatherView.switchIndicatorAnimation()
-            self?.weatherView.switchLoadingView()
+            self?.switchView()
         }
     }
     
     func fetch(_ fetcher: Fetchable?, didFailWithError error: WeatherAppError) {
         DispatchQueue.main.async { [weak self] in
             self?.updateView(onFailure: error)
-            self?.weatherView.switchIndicatorAnimation()
-            self?.weatherView.switchLoadingView()
+            self?.switchView()
         }
     }
 }

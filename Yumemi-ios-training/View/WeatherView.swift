@@ -15,10 +15,10 @@ protocol WeatherViewDelegate: AnyObject {
 final class WeatherView: UIView {
     weak var delegate: WeatherViewDelegate?
     private let stackViewForImageViewAndLabels = UIStackView()
-    private let weatherImageView = UIImageView()
+    let weatherImageView = UIImageView()
     private let stackViewForLabels = UIStackView()
-    private let minTemperatureLabel = UILabel()
-    private let maxTemperatureLabel = UILabel()
+    let minTemperatureLabel = UILabel()
+    let maxTemperatureLabel = UILabel()
     private let closeButton = UIButton(type: .system)
     private let reloadButton = UIButton(type: .system)
     private let indicator = UIActivityIndicatorView()

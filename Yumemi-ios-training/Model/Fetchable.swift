@@ -13,5 +13,5 @@ protocol FetchableDelegate: AnyObject {
 
 protocol Fetchable {
     var delegate: FetchableDelegate? { get set }
-    func fetch()
+    func fetch(completion: (()->Void)?)
 }

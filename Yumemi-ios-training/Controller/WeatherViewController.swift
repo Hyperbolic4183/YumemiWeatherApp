@@ -50,7 +50,7 @@ class WeatherViewController: UIViewController {
     
     @objc func reload() {
         switchView()
-        weatherModel.fetch()
+        weatherModel.fetch(completion: nil)
     }
     
     private func switchView() {

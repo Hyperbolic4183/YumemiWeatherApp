@@ -12,7 +12,7 @@ final class Fetcher: Fetchable {
     
     weak var delegate: FetchableDelegate?
     
-    func fetch() {
+    func fetch(completion: (() -> Void)?) {
         DispatchQueue.global().async { [weak self] in
             do {
                 let weatherDataString = try YumemiWeather.syncFetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }")

@@ -11,7 +11,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install pods
-      run: pod install
+    - name: Cache CocoaPods files
+         uses: actions/cache@v1
+         with:
+           path: Pods
+           key: ${{ runner.os }}-pods-${{ hashFiles('Podfile.lock') }}
+           restore-keys: |
+             ${{ runner.os }}-pods-
+    - run: pod install
     - name: Run tests
       run: swift test -v

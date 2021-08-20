@@ -18,6 +18,7 @@ jobs:
            key: ${{ runner.os }}-pods-${{ hashFiles('Podfile.lock') }}
            restore-keys: |
              ${{ runner.os }}-pods-
-    - run: pod install
+    - name: Pod install
+      run: pod install
     - name: Run tests
       run: swift test -v

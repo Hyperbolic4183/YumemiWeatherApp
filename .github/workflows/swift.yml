@@ -3,7 +3,7 @@ name: Swift
 on:
   pull_request:
     branches: [ main ]
-
+    
 jobs:
   build:
 
@@ -11,14 +11,5 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Cache CocoaPods files
-         uses: actions/cache@v1
-         with:
-           path: Pods
-           key: ${{ runner.os }}-pods-${{ hashFiles('Podfile.lock') }}
-           restore-keys: |
-             ${{ runner.os }}-pods-
-    - name: Pod install
-      run: pod install
     - name: Run tests
       run: swift test -v

@@ -11,12 +11,11 @@ import Foundation
 final class Fetcher: Fetchable {
     
     weak var delegate: FetchableDelegate?
-    
     func fetch() {
-        DispatchQueue.global().async { [weak self] in
-            do {
-                let weatherDataString = try YumemiWeather.syncFetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }")
-                let weatherData = Data(weatherDataString.utf8)
+        YumemiWeather.asyncFetchWeather("{\"area\": \"tokyo\", \"date\": \"2020-04-01T12:00:00+09:00\" }") { [weak self] result in
+            switch result {
+            case .success(let jsonString):
+                let weatherData = Data(jsonString.utf8)
                 guard let weatherResponse = self?.convert(from: weatherData) else {
                     assertionFailure("convertに失敗")
                     self?.delegate?.fetch(self, didFailWithError: .unknownError)
@@ -31,16 +30,13 @@ final class Fetcher: Fetchable {
                 let maxTemperature = String(weatherResponse.maxTemp)
                 let weatherInformation = WeatherInformation(weather: weather, minTemperature: minTemperature, maxTemperature: maxTemperature)
                 self?.delegate?.fetch(self, didFetch: weatherInformation)
-            } catch let error as YumemiWeatherError {
+            case .failure(let error):
                 switch error {
                 case .invalidParameterError:
                     self?.delegate?.fetch(self, didFailWithError: .invalidParameterError)
                 case .unknownError:
                     self?.delegate?.fetch(self, didFailWithError: .unknownError)
                 }
-            } catch {
-                assertionFailure("予期せぬエラーが発生しました")
-                self?.delegate?.fetch(self, didFailWithError: .unknownError)
             }
         }
     }

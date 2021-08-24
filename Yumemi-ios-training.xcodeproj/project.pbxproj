@@ -215,7 +215,7 @@
 			);
 			mainGroup = D9982528263B730F00E373B8;
 			packageReferences = (
-				D9BF7DD02644D75C00B62D63 /* XCRemoteSwiftPackageReference "ios-training" */,
+				D9BF7DD02644D75C00B62D63 /* XCRemoteSwiftPackageReference "ios-training.git" */,
 			);
 			productRefGroup = D9982532263B730F00E373B8 /* Products */;
 			projectDirPath = "";
@@ -522,7 +522,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D9BF7DD02644D75C00B62D63 /* XCRemoteSwiftPackageReference "ios-training" */ = {
+		D9BF7DD02644D75C00B62D63 /* XCRemoteSwiftPackageReference "ios-training.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yumemi-inc/ios-training.git";
 			requirement = {
@@ -535,7 +535,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		D9BF7DD12644D75C00B62D63 /* YumemiWeather */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D9BF7DD02644D75C00B62D63 /* XCRemoteSwiftPackageReference "ios-training" */;
+			package = D9BF7DD02644D75C00B62D63 /* XCRemoteSwiftPackageReference "ios-training.git" */;
 			productName = YumemiWeather;
 		};
 /* End XCSwiftPackageProductDependency section */
